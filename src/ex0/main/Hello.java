@@ -1,5 +1,10 @@
 package ex0.main;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Hello {
 
 	public static void main(String[] args) {

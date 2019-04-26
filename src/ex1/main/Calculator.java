@@ -2,7 +2,9 @@ package ex1.main;
 
 import java.util.Scanner;
 /**
+ * 
  * @author Pascal Gepperth (4005085)
+ * 
  */
 public class Calculator {
 
