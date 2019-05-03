@@ -73,7 +73,7 @@ public class Series {
 		if (n < 0) {
 			return 0;
 		}
-		int result = 0;
+		int result = 1;
 
 		for (int i = n; i > 1; i--) {
 			result *= i;
