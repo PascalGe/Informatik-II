@@ -95,10 +95,9 @@ public class Series {
 	// 2.1 g)
 	public static void reverse_digits(int n) {
 		while (n > 0) {
-			System.out.print(n % 10 + " ");
+			System.out.println(n % 10);
 			n /= 10;
 		}
-		System.out.print("\n");
 	}
 
 	// Exercise Task
