@@ -95,9 +95,10 @@ public class Series {
 	// 2.1 g)
 	public static void reverse_digits(int n) {
 		while (n > 0) {
-			System.out.println(n % 10);
+			System.out.print(n % 10 + " ");
 			n /= 10;
 		}
+		System.out.print("\n");
 	}
 
 	// Exercise Task
@@ -132,10 +133,10 @@ public class Series {
 //		if (m < 1) {
 //			return 0;
 //		}
-		long max_startwert = 0; // 1
+		long max_startwert = 1;
 		long max_steps = 0;
 
-		for (long i = 1; i <= m; i++) {
+		for (long i = 2; i <= m; i++) {
 			// Calculate steps for i
 			long steps = collatz(i);
 			if (steps > max_steps) {
