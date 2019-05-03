@@ -73,13 +73,11 @@ public class Series {
 		if (n < 0) {
 			return 0;
 		}
-		int result = 1;
+		int result = 0;
 
-		while (n > 1) {
-			result *= n;
-			n--;
+		for (int i = n; i > 1; i--) {
+			result *= i;
 		}
-
 		return result;
 	}
 
@@ -134,7 +132,7 @@ public class Series {
 //		if (m < 1) {
 //			return 0;
 //		}
-		long max_startwert = 1;
+		long max_startwert = 0; // 1
 		long max_steps = 0;
 
 		for (long i = 1; i <= m; i++) {
@@ -177,9 +175,8 @@ public class Series {
 			counter++;
 		}
 
-		// Calculate minimum
-		@SuppressWarnings("unused")
-		double min = Math.pow(x_cur - a, 2) + b;
+		// Calculate minimum -- should be returned, shouldn't it?
+//		double min = Math.pow(x_cur - a, 2) + b;
 
 		return x_cur;
 	}

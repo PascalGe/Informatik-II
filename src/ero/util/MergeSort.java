@@ -1,7 +1,17 @@
 package ero.util;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class MergeSort {
 
+	/**
+	 * Uses the merge sort to sort an integer array.
+	 * @param array The unsorted array that wants to be sorted.
+	 * @return A sorted ascending array.
+	 */
 	public static int[] mergeSort(int[] array) {
 		// Stop if there's nothing to be sort
 		if (array.length < 2) {
@@ -26,21 +36,21 @@ public class MergeSort {
 	}
 
 	private static int[] merge(int[] firstArray, int[] secondArray) {
-		int[] sortArray = new int[firstArray.length + secondArray.length];
+		int[] sortedArray = new int[firstArray.length + secondArray.length];
 		int i = 0, j = 0;
 		while (i < firstArray.length && j < secondArray.length) {
 			if (firstArray[i] <= secondArray[j]) {
-				sortArray[i+j] = firstArray[i++];
+				sortedArray[i + j] = firstArray[i++];
 			} else {
-				sortArray[i+j] = secondArray[j++];
+				sortedArray[i + j] = secondArray[j++];
 			}
 		}
-		while (i< firstArray.length) {
-			sortArray[i+j] = firstArray[i++];
+		while (i < firstArray.length) {
+			sortedArray[i + j] = firstArray[i++];
 		}
-		while (j< secondArray.length) {
-			sortArray[i+j] = secondArray[j++];
+		while (j < secondArray.length) {
+			sortedArray[i + j] = secondArray[j++];
 		}
-		return sortArray;
+		return sortedArray;
 	}
 }
