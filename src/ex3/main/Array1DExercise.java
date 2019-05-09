@@ -195,8 +195,6 @@ public class Array1DExercise {
 				}
 			}
 		}
-		// TODO: fill me
-
 		return hist;
 	}
 
