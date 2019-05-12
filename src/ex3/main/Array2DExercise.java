@@ -3,7 +3,6 @@ package ex3.main;
 public class Array2DExercise {
 	// 3.2 a)
 	public static void print_array_2d(int[] array) {
-		// TODO fill me
 		int width = (int) Math.sqrt(array.length);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < width; j++) {
@@ -21,7 +20,7 @@ public class Array2DExercise {
 		// right --> +1, down --> +width
 		boolean right = true;
 
-		// start at [0,0]
+		// start at [0*width + 0]
 		int i = 0;
 
 		while (true) {
