@@ -115,7 +115,10 @@ public class Array1DExercise {
 		int[] temp = new int[array.length];
 		for (int i = 0; i < array.length; i++) {
 			// Calculate the shift index
-			int index = (i - n + array.length) % array.length;
+			int index = (i - n) % array.length;
+			if (index < 0) {
+				index += array.length;
+			}
 			temp[i] = array[index];
 		}
 
