@@ -1,14 +1,15 @@
 package ero.test;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
-
-import ero.util.MergeSort;
 import junit.framework.TestCase;
 
-class MergeSortTest extends TestCase {
-	private static final int n = (int) 1e6;
+import ero.util.InsertionSort;
+
+class InsertionSortTest extends TestCase {
+
+	private static final int n = (int) 1e4;
 
 	@Override
 	public void setUp() throws Exception {
@@ -18,14 +19,14 @@ class MergeSortTest extends TestCase {
 	@Test
 	void testNull() {
 		int[] actual = null;
-		assertArrayEquals(MergeSort.mergeSort(actual), null);
+		assertArrayEquals(InsertionSort.sort(actual), null);
 	}
 
 	@Test
 	void test1() {
 		int[] actual = { 5, 1, 6, 2, 3, 4 };
 		int[] expected = { 1, 2, 3, 4, 5, 6 };
-		assertArrayEquals(MergeSort.mergeSort(actual), expected);
+		assertArrayEquals(InsertionSort.sort(actual), expected);
 	}
 
 	@Test
@@ -61,7 +62,6 @@ class MergeSortTest extends TestCase {
 			actual[i] = multiplier * n - 1 - i;
 			expected[i] = i;
 		}
-		assertArrayEquals(MergeSort.mergeSort(actual), expected);
+		assertArrayEquals(InsertionSort.sort(actual), expected);
 	}
-
 }

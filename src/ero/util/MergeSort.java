@@ -9,12 +9,13 @@ public class MergeSort {
 
 	/**
 	 * Uses the merge sort to sort an integer array.
+	 * 
 	 * @param array The unsorted array that wants to be sorted.
 	 * @return A sorted ascending array.
 	 */
 	public static int[] mergeSort(int[] array) {
 		// Stop if there's nothing to be sort
-		if (array.length < 2) {
+		if (array == null || array.length < 2) {
 			return array;
 		}
 		// Divide the array
