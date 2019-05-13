@@ -1,5 +1,10 @@
 package ex3.main;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Array1DExercise {
 
 	public static void print_array(int[] array) {
