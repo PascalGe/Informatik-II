@@ -10,7 +10,7 @@ public class IsingModel {
 	public static boolean isValid(boolean[] board, int n) {
 
 		// generate 2D-Array
-		boolean[][] boardArray = new boolean[3][3];
+		boolean[][] boardArray = new boolean[n][n];
 		for (int i = 0; i < boardArray.length; i++) {
 			for (int j = 0; j < boardArray.length; j++) {
 				boardArray[i][j] = board[n * i + j];
