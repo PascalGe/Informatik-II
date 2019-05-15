@@ -44,10 +44,10 @@ public class Methods {
 		return true;
 	}
 
-	// 4.3 d) TODO implement "is_prime"
+	// 4.3 d)
 	public static boolean isPrime(int number) {
 		if (number <= 2) {
-			return (number == 2);
+			return number == 2;
 		}
 //		for (int i = 2; i < number; i++) {
 //			if ((number % i) == 0) {
@@ -73,30 +73,30 @@ public class Methods {
 			return false;
 		}
 		if (number % 3 == 0) {
-			return false;
+			return number == 3;
 		}
 		if (number % 5 == 0) {
-			return false;
+			return number == 5;
 		}
 		if (number % 7 == 0) {
-			return false;
+			return number == 7;
 		}
 
-		for (int i = 10; i * i < number; i += 10) {
+		for (int i = 1; i * i * 100 <= number; i++) {
 			// divider ending by 1
-			if (number % (i + 1) == 0) {
+			if (number % (i * 10 + 1) == 0) {
 				return false;
 			}
 			// divider ending by 3
-			if (number % (i + 3) == 0) {
+			if (number % (i * 10 + 3) == 0) {
 				return false;
 			}
 			// divider ending by 7
-			if (number % (i + 7) == 0) {
+			if (number % (i * 10 + 7) == 0) {
 				return false;
 			}
 			// divider ending by 9
-			if (number % (i + 9) == 0) {
+			if (number % (i * 10 + 9) == 0) {
 				return false;
 			}
 		}
@@ -105,7 +105,7 @@ public class Methods {
 
 	// 4.3 e)
 	public static boolean belongsToPrimeTwin(int number) {
-		return (isPrime(number) && (isPrime(number - 2) ^ isPrime(number + 2)));
+		return (isPrime(number) && (isPrime(number - 2) || isPrime(number + 2)));
 	}
 
 	public static void main(String[] args) {
