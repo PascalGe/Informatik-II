@@ -10,8 +10,9 @@ import java.util.Scanner;
 public class BlackJack {
 
 	// Java-constants
+	private static final int MIN_CARD_VALUE = 1;
 	private static final int MAX_CARD_VALUE = 11;
-	private static final double MIN_CARD_VALUE = 1;
+
 	private static Scanner sc = new Scanner(System.in);
 
 	public static void main(String[] args) {
@@ -33,7 +34,7 @@ public class BlackJack {
 		System.out.println("Player's bet:");
 		bet = sc.nextInt();
 
-		if (vadidBetPlayer(currentBalance, bet) == -1) {
+		if (validBetPlayer(currentBalance, bet) == -1) {
 			startGame(currentBalance);
 			return;
 		}
@@ -43,7 +44,7 @@ public class BlackJack {
 		do {
 			cardValuePlayer += giveCard();
 			System.out.println("Player's card value: " + cardValuePlayer);
-		} while (cardValuePlayer < 21 && oneCardMore());
+		} while (cardValuePlayer < 21 && oneMoreCard());
 
 		// if player not exceeding 21
 		if (cardValuePlayer < 21) {
@@ -62,7 +63,7 @@ public class BlackJack {
 		}
 	}
 
-	private static int vadidBetPlayer(int currentBalance, int bet) {
+	public static int validBetPlayer(int currentBalance, int bet) {
 		if (bet < 1 || currentBalance - bet < 0) {
 			System.out.println("Invalid input.");
 			return -1;
@@ -70,7 +71,7 @@ public class BlackJack {
 		return bet;
 	}
 
-	private static String evaluateWinner(int cardValuePlayer, int cardValueBank) {
+	public static String evaluateWinner(int cardValuePlayer, int cardValueBank) {
 
 		/*
 		 * If player has Black Jack, or bank exceeding 21, or player has more than bank
@@ -92,7 +93,7 @@ public class BlackJack {
 		return "bank";
 	}
 
-	private static int updateMoney(int currentBalance, int bet, String winner) {
+	public static int updateMoney(int currentBalance, int bet, String winner) {
 		int change = 0;
 
 		if (winner == "player") {
@@ -110,7 +111,7 @@ public class BlackJack {
 	 * 
 	 * @return Player's decision.
 	 */
-	private static boolean oneCardMore() {
+	public static boolean oneMoreCard() {
 		return yesNoDialogue("One more Card?");
 	}
 
@@ -157,8 +158,8 @@ public class BlackJack {
 	 * 
 	 * @return A random card value.
 	 */
-	private static int giveCard() {
-		return (int) (Math.random() * (MAX_CARD_VALUE + 1) + MIN_CARD_VALUE);
+	public static int giveCard() {
+		return (int) (Math.random() * (MAX_CARD_VALUE - MIN_CARD_VALUE + 1) + MIN_CARD_VALUE);
 	}
 
 }
