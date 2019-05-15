@@ -44,27 +44,21 @@ class MethodsTest {
 
 	@Test
 	void testIsPrime() {
-		int n1 = 9;
-		int n2 = 10;
-		int n3 = 11;
-		int n4 = 13;
 
-		assertFalse(Methods.isPrime(n1));
-		assertFalse(Methods.isPrime(n2));
-		assertTrue(Methods.isPrime(n3));
-		assertTrue(Methods.isPrime(n4));
+		assertTrue(Methods.isPrime(3));
+		assertFalse(Methods.isPrime(9));
+		assertFalse(Methods.isPrime(10));
+		assertTrue(Methods.isPrime(11));
+		assertTrue(Methods.isPrime(13));
 	}
 
 	@Test
 	void testBelongToPrimeTwin() {
-		int n1 = 9;
-		int n2 = 10;
-		int n3 = 11;
-		int n4 = 13;
 
-		assertFalse(Methods.belongsToPrimeTwin(n1));
-		assertFalse(Methods.belongsToPrimeTwin(n2));
-		assertTrue(Methods.belongsToPrimeTwin(n3));
-		assertTrue(Methods.belongsToPrimeTwin(n4));
+		assertTrue(Methods.belongsToPrimeTwin(3));
+		assertFalse(Methods.belongsToPrimeTwin(9));
+		assertFalse(Methods.belongsToPrimeTwin(10));
+		assertTrue(Methods.belongsToPrimeTwin(11));
+		assertTrue(Methods.belongsToPrimeTwin(13));
 	}
 }
