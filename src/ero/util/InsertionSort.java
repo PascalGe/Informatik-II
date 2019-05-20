@@ -2,10 +2,10 @@ package ero.util;
 
 public class InsertionSort {
 
-	public static int[] sort(int[] array) {
+	public static void sort(int[] array) {
 
 		if (array == null || array.length < 2) {
-			return array;
+			return;
 		}
 		// iterate array
 		for (int i = 1; i < array.length; i++) {
@@ -16,6 +16,5 @@ public class InsertionSort {
 				array[newIndex - 1] = currentValue;
 			}
 		}
-		return array;
 	}
 }
