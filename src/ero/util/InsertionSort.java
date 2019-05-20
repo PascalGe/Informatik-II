@@ -8,18 +8,12 @@ public class InsertionSort {
 			return array;
 		}
 		// iterate array
-		nextValue: for (int i = 1; i < array.length; i++) {
+		for (int i = 1; i < array.length; i++) {
 			int currentValue = array[i];
-			for (int newIndex = i; newIndex >= 0; newIndex--) {
-				// if previous value is less than currentValue
-				if (newIndex == 0 || array[newIndex - 1] <= currentValue) {
-					array[newIndex] = currentValue;
-					continue nextValue;
-				}
-				// else shift right
-				else {
-					array[newIndex] = array[newIndex - 1];
-				}
+			for (int newIndex = i; newIndex > 0 && array[newIndex - 1] > currentValue; newIndex--) {
+				// swap
+				array[newIndex] = array[newIndex - 1];
+				array[newIndex - 1] = currentValue;
 			}
 		}
 		return array;
