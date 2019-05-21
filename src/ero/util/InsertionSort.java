@@ -11,10 +11,10 @@ public class InsertionSort {
 		// iterate array
 		for (int i = 1; i < array.length; i++) {
 			int currentValue = array[i];
-			for (int newIndex = i; newIndex > 0 && array[newIndex - 1] > currentValue; newIndex--) {
+			for (int currentIndex = i; currentIndex > 0 && array[currentIndex - 1] > currentValue; currentIndex--) {
 				// swap
-				array[newIndex] = array[newIndex - 1];
-				array[newIndex - 1] = currentValue;
+				array[currentIndex] = array[currentIndex - 1];
+				array[currentIndex - 1] = currentValue;
 			}
 		}
 	}
