@@ -24,8 +24,8 @@ public class BlackJack {
 	}
 
 	public static void startGame(int startMoney) {
-		
-		if(startMoney <= 0) {
+
+		if (startMoney <= 0) {
 			System.out.println("Not enough money to play.");
 			return;
 		}
@@ -35,37 +35,38 @@ public class BlackJack {
 		int cardValueBank = 0;
 		int bet;
 
-		// get bet
-		System.out.println("Player's bet:");
-		bet = sc.nextInt();
-
-		if (validBetPlayer(currentBalance, bet) == -1) {
-			startGame(currentBalance);
-			return;
-		}
-		currentBalance -= bet;
-
-		// player plays
+		System.out.println("Start balance: " + currentBalance);
 		do {
-			cardValuePlayer += giveCard();
-			System.out.println("Player's card value: " + cardValuePlayer);
-		} while (cardValuePlayer < 21 && oneMoreCard());
+			// get bet
+			System.out.println("Player's bet:");
+			bet = sc.nextInt();
 
-		// if player not exceeding 21
-		if (cardValuePlayer < 21) {
-			// bank plays
-			while (cardValueBank <= 17 && cardValueBank < cardValuePlayer) {
-				cardValueBank += giveCard();
-				System.out.println("Bank's card value: " + cardValueBank);
+			if (validBetPlayer(currentBalance, bet) == -1) {
+				startGame(currentBalance);
+				return;
 			}
-		}
+			currentBalance -= bet;
 
-		String winner = evaluateWinner(cardValuePlayer, cardValueBank);
-		currentBalance = updateMoney(currentBalance, bet, winner);
+			// player plays
+			do {
+				cardValuePlayer += giveCard();
+				System.out.println("Player's card value: " + cardValuePlayer);
+			} while (cardValuePlayer < 21 && oneMoreCard());
 
-		if (currentBalance > 0 && yesNoDialogue("Next round?")) {
-			startGame(currentBalance);
-		}
+			// if player not exceeding 21
+			if (cardValuePlayer < 21) {
+				// bank plays
+				while (cardValueBank <= 17 && cardValueBank < cardValuePlayer) {
+					cardValueBank += giveCard();
+					System.out.println("Bank's card value: " + cardValueBank);
+				}
+			}
+
+			String winner = evaluateWinner(cardValuePlayer, cardValueBank);
+			currentBalance = updateMoney(currentBalance, bet, winner);
+
+		} while (currentBalance > 0 && yesNoDialogue("Next round?"));
+		System.out.println("Goodbye.");
 	}
 
 	public static int validBetPlayer(int currentBalance, int bet) {
