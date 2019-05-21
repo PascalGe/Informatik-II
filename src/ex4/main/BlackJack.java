@@ -24,6 +24,11 @@ public class BlackJack {
 	}
 
 	public static void startGame(int startMoney) {
+		
+		if(startMoney <= 0) {
+			System.out.println("Not enough money to play.");
+			return;
+		}
 		System.out.println("Welcome to BlackJack");
 		int currentBalance = startMoney;
 		int cardValuePlayer = 0;
