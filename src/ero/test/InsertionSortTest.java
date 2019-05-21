@@ -2,10 +2,12 @@ package ero.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+
 import org.junit.jupiter.api.Test;
-import junit.framework.TestCase;
 
 import ero.util.InsertionSort;
+import junit.framework.TestCase;
 
 class InsertionSortTest extends TestCase {
 
@@ -19,14 +21,16 @@ class InsertionSortTest extends TestCase {
 	@Test
 	void testNull() {
 		int[] actual = null;
-		assertArrayEquals(InsertionSort.sort(actual), null);
+		InsertionSort.sort(actual);
+		assertArrayEquals(actual, null);
 	}
 
 	@Test
 	void test1() {
 		int[] actual = { 5, 1, 6, 2, 3, 4 };
 		int[] expected = { 1, 2, 3, 4, 5, 6 };
-		assertArrayEquals(InsertionSort.sort(actual), expected);
+		InsertionSort.sort(actual);
+		assertArrayEquals(actual, expected);
 	}
 
 	@Test
@@ -62,6 +66,7 @@ class InsertionSortTest extends TestCase {
 			actual[i] = multiplier * n - 1 - i;
 			expected[i] = i;
 		}
-		assertArrayEquals(InsertionSort.sort(actual), expected);
+		InsertionSort.sort(actual);
+		assertArrayEquals(actual, expected);
 	}
 }

@@ -2,6 +2,7 @@ package ero.util;
 
 public class InsertionSort {
 
+	// in-place
 	public static void sort(int[] array) {
 
 		if (array == null || array.length < 2) {
