@@ -14,9 +14,9 @@ public class Dish {
 	private static final int SIZE_POT = 5;
 
 	// Fields
-	private String name;
-	private float dirty;
-	private int size;
+	private String name; // name of the dish --> String
+	private float dirty; // dirtiness within 0% and 100% --> float
+	private int size; // size of the dish --> int
 
 	/**
 	 * Creates a new dish with name and dirtiness.
