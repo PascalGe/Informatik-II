@@ -2,35 +2,48 @@ package ex5.main;
 
 public class Meal {
 
-    // TODO 5.1 a) kcalSum
 	private float kcalSum;
+	// counter
+	private int numberOfIngredients;
 
-    // TODO 5.1 j) ingredients, amounts
-    // - Think about how to keep track of how many ingredients were added!
+	private String[] ingredients;
+	private int[] amounts;
 
-    public Meal() {
-	// TODO a) initialize
-    	this.kcalSum = 0;
-    }
+	public Meal() {
+		// initialize
+		kcalSum = 0;
+		numberOfIngredients = 0;
+		ingredients = new String[100];
+		amounts = new int[100];
+	}
 
-    public void addFruit(Fruit fruit, int weight) {
-    	kcalSum += fruit.computeCalories(weight);
-    	// TODO 5.1j) Add information to ingredients and amounts.
-    }
+	public void addFruit(Fruit fruit, int weight) {
+		// compute calories
+		kcalSum += fruit.computeCalories(weight);
+		// store ingredient
+		ingredients[numberOfIngredients] = fruit.name;
+		// store amount
+		amounts[numberOfIngredients] = weight;
+		// increment counter
+		numberOfIngredients++;
+	}
 
-    /* TODO 5.1 c) Remove this comment after implementing the Vegetable class.
-    public void addVegetable(Vegetable vegetable) {
-	kcalSum += vegetable.computeCalories(gVegetable);
-	// TODO 5.1j) Add information to ingredients and amounts.
-    }
-    */
+	public void addVegetable(Vegetable vegetable, int weight) {
+		// compute calories
+		kcalSum += vegetable.computeCalories(weight);
+		// store ingredient
+		ingredients[numberOfIngredients] = vegetable.name;
+		// store amount
+		amounts[numberOfIngredients] = weight;
+		// increment counter
+		numberOfIngredients++;
+	}
 
-    public void printStatus() {
-	/*
-	 * TODO 5.1 a) Remove this comment after creating the attribute kcalSum.
-	 * System.out.println("Your meal has: " + kcalSum + "kcal.");
-	 */
-	// TODO 5.1 j) Print a list of ingredients.
-    }
-
+	public void printStatus() {
+		System.out.println("Your meal has: " + kcalSum + "kcal.");
+		// Print a list of ingredients.
+		for (int i = 0; i < numberOfIngredients; i++) {
+			System.out.println(amounts[i] + "g of " + ingredients[i]);
+		}
+	}
 }
