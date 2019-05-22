@@ -27,11 +27,10 @@ public class Vegetable {
 		}
 	}
 
-	public int computeCalories() {
+	public float computeCalories(float gramms) {
 		if (!edible) {
 			return 0;
 		}
-		return kcal;
+		return (kcal / 100.0f) * gramms;
 	}
-
 }
