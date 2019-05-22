@@ -1,5 +1,9 @@
 package ex5.main;
-
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class MealPlan {
 
 	public static void main(String[] args) {
