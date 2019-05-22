@@ -48,6 +48,7 @@ public class Dish {
 	}
 
 	/**
+	 * Cleans the dish.
 	 * 
 	 * @param value - the value that the dirtiness is to be reduced by.
 	 */
@@ -59,6 +60,9 @@ public class Dish {
 		}
 	}
 
+	/**
+	 * Sets the size of the dish using its name.
+	 */
 	private void determineSize() {
 		switch (name) {
 		case "Cutlery":

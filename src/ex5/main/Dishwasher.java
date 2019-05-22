@@ -48,6 +48,9 @@ public class Dishwasher {
 		}
 	}
 
+	/**
+	 * Cleans all dishes within the dishwasher.
+	 */
 	private static void clean() {
 		for (int i = 0; i < counter; i++) {
 			dishwasher[i].clean(0.3f);
@@ -55,6 +58,9 @@ public class Dishwasher {
 
 	}
 
+	/**
+	 * Empties the dishwasher.
+	 */
 	private static void empty() {
 		for (int i = 0; i < counter; i++) {
 			dishwasher[i] = null;
@@ -62,6 +68,11 @@ public class Dishwasher {
 		counter = 0;
 	}
 
+	/**
+	 * Gathers the dish.
+	 * 
+	 * @param dish - the dish that will added to the dishwasher.
+	 */
 	private static void add(Dish dish) {
 		dishwasher[counter] = dish;
 		fullness += dish.getSize();
