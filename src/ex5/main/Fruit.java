@@ -13,11 +13,10 @@ public class Fruit {
 	}
 
 	public float computeCalories(float gramms) {
-		// TODO 5.1 b) Fruits with peal contribute only 90% of their mass to the kcal.
-		float kcal = (this.kcal / 100.0f) * gramms;
+		// Fruits with peal contribute only 90% of their mass to the kcal.
 		if (hasPeel) {
-			kcal *= 0.9f;
+			gramms *= .9f;
 		}
-		return kcal;
+		return (this.kcal / 100.0f) * gramms;
 	}
 }
