@@ -1,5 +1,24 @@
 package ex5.main;
 
+/*
+ * Scratch:
+ * ########
+ * 
+ * Fields:
+ * - name: String		Names are Strings
+ * - dirty: float		Values between 0.0 and 1.0,  precision high enough
+ * - size: int			Just integer value sizes
+ * 
+ * Methods:
+ * - Dish(String, float)		Constructor
+ * - printStatus(): void		output console
+ * - clean(float): void			dirty is float, side effects
+ * - determineSize(): void		sets size out of name
+ * - getName(): String			Getter
+ * - getDirty(): float			Getter
+ * - getSize(): int				Getter
+ */
+
 /**
  * 
  * @author Pascal Gepperth (4005085)
