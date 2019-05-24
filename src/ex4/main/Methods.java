@@ -33,15 +33,10 @@ public class Methods {
 
 	// 4.3 c)
 	public static boolean isReversed(int[] firstArray, int[] secondArray) {
-		if (firstArray.length != secondArray.length) {
-			return false;
-		}
-		for (int i = 0; i < firstArray.length; i++) {
-			if (firstArray[i] != secondArray[secondArray.length - 1 - i]) {
-				return false;
-			}
-		}
-		return true;
+		reverse(secondArray);
+		boolean isReversed = isEqual(firstArray, secondArray);
+		reverse(secondArray);
+		return isReversed;
 	}
 
 	// 4.3 d)
