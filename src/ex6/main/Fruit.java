@@ -1,4 +1,4 @@
-package main;
+package ex6.main;
 
 public class Fruit extends Food {
 

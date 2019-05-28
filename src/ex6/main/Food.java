@@ -1,4 +1,4 @@
-package main;
+package ex6.main;
 
 public abstract class Food {
 
