@@ -9,18 +9,17 @@ public class MealPlan {
 		// TODO after implementing the Vegetable class:
 		// change the foods array to a size of 10
 		// and uncomment the Vegetable block below
-		Food[] foods = new Food[5];
+		Food[] foods = new Food[10];
 		foods[0] = new Fruit("Banana", 96, true);
 		foods[1] = new Fruit("Apple", 52, false);
 		foods[2] = new Fruit("Orange", 47, true);
 		foods[3] = new Fruit("Cherry", 50, false);
 		foods[4] = new Fruit("Berries", 33, false);
-		/*
-		 * foods[5] = new Vegetable("Pumpkin", 26, 15); foods[6] = new
-		 * Vegetable("Broccoli", 34, 2); foods[7] = new Vegetable("Potato", 73, 10);
-		 * foods[8] = new Vegetable("Beans", 295, 7); foods[9] = new
-		 * Vegetable("Lintels", 335, 18);
-		 */
+		foods[5] = new Vegetable("Pumpkin", 26, 15);
+		foods[6] = new Vegetable("Broccoli", 34, 2);
+		foods[7] = new Vegetable("Potato", 73, 10);
+		foods[8] = new Vegetable("Beans", 295, 7);
+		foods[9] = new Vegetable("Lintels", 335, 18);
 
 		int[] weights = new int[10];
 		weights[0] = 100; // 100g banana
@@ -38,7 +37,7 @@ public class MealPlan {
 			int weight = foods[i].prepare(weights[i]);
 
 			// TODO activate this after you implemented it
-			// meal.addFood(foods[i], weight);
+			meal.addFood(foods[i], weight);
 		}
 
 		meal.printStatus();

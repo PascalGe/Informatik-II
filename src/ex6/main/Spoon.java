@@ -1,9 +1,10 @@
 package ex6.main;
 
-public class Spoon extends Dish {
+public class Spoon extends Cutlery {
 
 	public Spoon(float f) {
-		// TODO Auto-generated constructor stub
+		super(f);
+		dirtReduction = .2f;
 	}
 
 }

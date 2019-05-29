@@ -16,6 +16,9 @@ public abstract class Food {
 
 	public float computeCalories(float gramms) {
 		// TODO complete the computation
-		return 0.0f;
+		if (!edible) {
+			return 0.0f;
+		}
+		return (kcal / 100f) * gramms;
 	}
 }
