@@ -1,5 +1,10 @@
 package ex6.main;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public abstract class Food {
 
 	public String name;
@@ -8,14 +13,25 @@ public abstract class Food {
 
 	public abstract int prepare(int weight);
 
+	/**
+	 * Creates a new food.
+	 * 
+	 * @param _name - name of the food.
+	 * @param _kcal - calories per 100g.
+	 */
 	public Food(String _name, int _kcal) {
 		name = _name;
 		kcal = _kcal;
 		edible = false;
 	}
 
+	/**
+	 * Computes the calories of the food.
+	 * 
+	 * @param gramms - the weight of the food.
+	 * @return the calories of the food, if edible. Zero else.
+	 */
 	public float computeCalories(float gramms) {
-		// TODO complete the computation
 		if (!edible) {
 			return 0.0f;
 		}

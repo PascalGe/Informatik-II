@@ -1,5 +1,10 @@
 package ex6.main;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Meal {
 
 	private float kcalSum;
@@ -14,8 +19,6 @@ public class Meal {
 		amounts = new int[100];
 	}
 
-	// TODO: implement an addFood() method
-	// to collect names, weights and accumulate kCals
 	/**
 	 * Adds food at its current status.
 	 * 
@@ -29,6 +32,9 @@ public class Meal {
 		ingredientCount++;
 	}
 
+	/**
+	 * Prints the current status of the meal.
+	 */
 	public void printStatus() {
 		System.out.println("Your meal has: " + kcalSum + "kcal.");
 		for (int i = 0; i < ingredientCount; i++) {

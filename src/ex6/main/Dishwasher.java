@@ -1,5 +1,9 @@
 package ex6.main;
-
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Dishwasher {
 
 	public static void main(String[] args) {

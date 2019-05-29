@@ -1,14 +1,16 @@
 package ex6.main;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class MealPlan {
 
 	public static void main(String[] args) {
 
 		Meal meal = new Meal();
 
-		// TODO after implementing the Vegetable class:
-		// change the foods array to a size of 10
-		// and uncomment the Vegetable block below
 		Food[] foods = new Food[10];
 		foods[0] = new Fruit("Banana", 96, true);
 		foods[1] = new Fruit("Apple", 52, false);
@@ -36,10 +38,8 @@ public class MealPlan {
 		for (int i = 0; i < foods.length; i++) {
 			int weight = foods[i].prepare(weights[i]);
 
-			// TODO activate this after you implemented it
 			meal.addFood(foods[i], weight);
 		}
-
 		meal.printStatus();
 	}
 }
