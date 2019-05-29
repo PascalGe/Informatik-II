@@ -25,6 +25,20 @@ public class Vegetable extends Food {
 	}
 
 	/**
+	 * Creates a new vegetable.
+	 * 
+	 * @param _name          - name of the vegetable.
+	 * @param _kcal          - calories per 100g.
+	 * @param cookingMinutes - time that the vegetable has to be cooked, before its
+	 *                       edible.
+	 * @param cooked         - minutes that the vegetable is already cooked.
+	 */
+	public Vegetable(String _name, int _kcal, int cookingMinutes, int cooked) {
+		this(_name, _kcal, cookingMinutes);
+		this.cooked = cooked;
+	}
+
+	/**
 	 * Prepares the vegetable to be eaten.
 	 * 
 	 */
@@ -36,9 +50,9 @@ public class Vegetable extends Food {
 		return weight;
 	}
 
-	private void cookIt() {
+	public void cookIt() {
 		cooked++;
-		if (cooked == cookingMinutes) {
+		if (cooked >= cookingMinutes) {
 			edible = true;
 		}
 	}
