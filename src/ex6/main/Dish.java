@@ -25,9 +25,9 @@ public abstract class Dish {
 	 */
 	public void printStatus() {
 		if (dirty > .1) {
-			System.out.println(getClass().getSimpleName() + "still dirty");
+			System.out.println(getClass().getSimpleName() + " still dirty");
 		} else {
-			System.out.println(getClass().getSimpleName() + "is clean");
+			System.out.println(getClass().getSimpleName() + " is clean");
 		}
 
 	}

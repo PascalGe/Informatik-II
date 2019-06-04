@@ -31,12 +31,15 @@ public class BlackJack {
 		}
 		System.out.println("Welcome to BlackJack");
 		int currentBalance = startMoney;
-		int cardValuePlayer = 0;
-		int cardValueBank = 0;
+		int cardValuePlayer;
+		int cardValueBank;
 		int bet;
 
 		System.out.println("Start balance: " + currentBalance);
 		do {
+			// reset cardValues
+			cardValuePlayer = 0;
+			cardValueBank = 0;
 			// get bet
 			System.out.println("Player's bet:");
 			bet = sc.nextInt();
