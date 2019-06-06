@@ -1,7 +1,5 @@
 package ex7.main;
 
-import java.awt.Color;
-import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
 /**
@@ -10,74 +8,75 @@ import java.awt.Rectangle;
  * the base block at (-1,-1) and initializes the rest of the field with the
  * other private constructor.
  */
-public class Barrier {
+public class Barrier extends LinkEntity {
 
-    private Rectangle borderArea;
-    protected Vector pos;
-    protected Color col;
-    private Barrier next;
+	private Rectangle borderArea;
+//    protected Vector pos;
+//    protected Color col;
+	private Barrier next;
 
-    public Barrier(Rectangle _gameArea, int level) {
-	pos = new Vector(-1, -1);
-	col = SnakeGame.arenaBarrier;
-	next = setNext(this);
+	public Barrier(Rectangle _gameArea, int level) {
+//	pos = new Vector(-1, -1);
+		super(-1, -1);
+		col = SnakeGame.arenaBarrier;
+		next = setNext(this);
 
-	borderArea = new Rectangle(_gameArea.x / MainFrame.tileSize, _gameArea.y / MainFrame.tileSize,
-		_gameArea.width / MainFrame.tileSize, _gameArea.height / MainFrame.tileSize);
+		borderArea = new Rectangle(_gameArea.x / MainFrame.tileSize, _gameArea.y / MainFrame.tileSize,
+				_gameArea.width / MainFrame.tileSize, _gameArea.height / MainFrame.tileSize);
 
-	for (int y = 0; y < borderArea.height; y++) {
-	    for (int x = 0; x < borderArea.width; x++) {
-		if (y == 0 || x == 0 || y == (borderArea.height - 1) || x == (borderArea.width - 1)) {
-		    extend(x - 1, y - 1);
+		for (int y = 0; y < borderArea.height; y++) {
+			for (int x = 0; x < borderArea.width; x++) {
+				if (y == 0 || x == 0 || y == (borderArea.height - 1) || x == (borderArea.width - 1)) {
+					extend(x - 1, y - 1);
+				}
+			}
 		}
-	    }
+
+		// TODO: spawn barriers randomly on unoccupied terrain
+
 	}
 
-	// TODO: spawn barriers randomly on unoccupied terrain
-
-    }
-
-    private Barrier(int _x, int _y) {
-	pos = new Vector(_x, _y);
-	col = SnakeGame.arenaBarrier;
-	setNext(this);
-    }
-
-    public boolean isOccupied(int x, int y) {
-
-	// TODO: check if x,y is occupied - (also for all following objects)
-
-	return false;
-    }
-
-    public boolean isLast() {
-	return next == this;
-    }
-
-    public Barrier setNext(Barrier _next) {
-	next = _next;
-	return next;
-    }
-
-    public Barrier getNext() {
-	return next;
-    }
-
-    public void extend(int _x, int _y) {
-	if (isLast()) {
-	    next = (Barrier) setNext(new Barrier(_x, _y));
-	} else {
-	    next = (Barrier) getNext();
-	    next.extend(_x, _y);
+	private Barrier(int _x, int _y) {
+		super(_x, _y);
+//		pos = new Vector(_x, _y);
+		col = SnakeGame.arenaBarrier;
+		setNext(this);
 	}
-    }
 
-    public void draw(Graphics2D g, Rectangle snakeArea, int tileSize) {
-	g.setColor(col);
-	g.fillRect(snakeArea.x + pos.x * tileSize, snakeArea.y + pos.y * tileSize, tileSize, tileSize);
-	if (!isLast()) {
-	    next.draw(g, snakeArea, tileSize);
+//	public boolean isOccupied(int x, int y) {
+//
+//		// TODO: check if x,y is occupied - (also for all following objects)
+//
+//		return false;
+//	}
+
+//	public boolean isLast() {
+//		return next == this;
+//	}
+
+	public Barrier setNext(Barrier _next) {
+		return (Barrier) super.setNext(_next);
 	}
-    }
+
+	public Barrier getNext() {
+		return (Barrier) super.getNext();
+	}
+
+	public void extend(int _x, int _y) {
+		if (isLast()) {
+			next = (Barrier) setNext(new Barrier(_x, _y));
+		} else {
+			next = (Barrier) getNext();
+			next.extend(_x, _y);
+		}
+	}
+
+//	public void draw(Graphics2D g, Rectangle snakeArea, int tileSize) {
+//		g.setColor(col);
+//		g.fillRect(snakeArea.x + pos.x * tileSize, snakeArea.y + pos.y * tileSize, tileSize, tileSize);
+//		if (!isLast()) {
+//			next.draw(g, snakeArea, tileSize);
+//		}
+//	}
 
 }

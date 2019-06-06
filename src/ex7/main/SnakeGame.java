@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -259,8 +260,15 @@ public class SnakeGame implements ActionListener, MouseListener {
 	 */
 	private void spawnFood() {
 
-		// TODO: spawn food randomly on (unoccupied) terrain
+		Random r = new Random();
+		int x, y;
+		do {
+			x = r.nextInt(numColumns);
+			y = r.nextInt(numRows);
 
+		} while (snake.isOccupied(x, y) || barrier.isOccupied(x, y));
+		food = new Food(x, y);
+		// TODO: spawn food randomly on (unoccupied) terrain
 	}
 
 	/**
@@ -283,6 +291,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 		// TODO: implement pause trigger mechanism
 		if (isRunning) {
 			timer.stop();
+			myPanel.repaint();
 		} else {
 			timer.restart();
 		}
@@ -392,7 +401,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 		g.fillRect(snakeArea.x, snakeArea.y, snakeArea.width, snakeArea.height);
 
 		barrier.draw(g, snakeArea, tileSize);
-		// food.draw(g, snakeArea, tileSize); // TODO: activate when implemented
+		food.draw(g, snakeArea, tileSize); // TODO: activate when implemented
 		snake.draw(g, snakeArea, tileSize);
 	}
 

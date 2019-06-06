@@ -10,34 +10,34 @@ import java.awt.Rectangle;
  */
 public class GameScore {
 
-    private String[] labels;
-    private int[] scores;
-    private int[] goals;
+	private String[] labels;
+	private int[] scores;
+	private int[] goals;
 
-    private static Font myBaseFont = new Font("Times", Font.BOLD, 16);
+	private static Font myBaseFont = new Font("Times", Font.BOLD, 16);
 
-    public GameScore(String[] _labels, int[] _scores, int[] _goals) {
-	labels = _labels;
-	scores = _scores;
-	goals = _goals;
-    }
-
-    public void paintScore(Graphics2D g, Rectangle area, int tileSize) {
-	Font temp = g.getFont();
-	g.setFont(myBaseFont);
-
-	int firstHeight = area.y + area.height / 2;
-	int heightSteps = (int) (1.2 * myBaseFont.getSize());
-	if (labels.length > 1) { // more than one line of scores to paint
-	    firstHeight -= (int) (((labels.length - 1) / 2.) * heightSteps);
+	public GameScore(String[] _labels, int[] _scores, int[] _goals) {
+		labels = _labels;
+		scores = _scores;
+		goals = _goals;
 	}
 
-	g.setColor(Color.BLACK);
-	for (int i = 0; i < labels.length; i++) {
-	    g.drawString(labels[i] + ": " + scores[i] + " / " + goals[i], area.x + area.width / tileSize - tileSize / 2,
-		    firstHeight + i * heightSteps);
-	}
+	public void paintScore(Graphics2D g, Rectangle area, int tileSize) {
+		Font temp = g.getFont();
+		g.setFont(myBaseFont);
 
-	g.setFont(temp);
-    }
+		int firstHeight = area.y + area.height / 2;
+		int heightSteps = (int) (1.2 * myBaseFont.getSize());
+		if (labels.length > 1) { // more than one line of scores to paint
+			firstHeight -= (int) (((labels.length - 1) / 2.) * heightSteps);
+		}
+
+		g.setColor(Color.BLACK);
+		for (int i = 0; i < labels.length; i++) {
+			g.drawString(labels[i] + ": " + scores[i] + " / " + goals[i], area.x + area.width / tileSize - tileSize / 2,
+					firstHeight + i * heightSteps);
+		}
+
+		g.setFont(temp);
+	}
 }
