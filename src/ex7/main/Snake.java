@@ -143,7 +143,7 @@ public class Snake extends LinkEntity {
 		move();
 		if (eat(food)) {
 			return true;
-		} else if (selfCollision(pos) && --lives == 0) {
+		} else if (selfCollision(pos) && lives == 0) {
 			alive = false;
 		}
 		return false;
