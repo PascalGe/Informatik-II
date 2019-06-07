@@ -50,6 +50,13 @@ public abstract class LinkEntity {
 	}
 
 	/**
+	 * @return position of the entity.
+	 */
+	public Vector getPos() {
+		return pos;
+	}
+
+	/**
 	 * Draws the entity.
 	 * 
 	 * @param g        - the graphics object.
