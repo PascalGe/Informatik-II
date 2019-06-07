@@ -176,6 +176,7 @@ public class Snake extends LinkEntity {
 		// checks for self collision and clips the snake if necessary
 		if (getNext().isOccupied(headPos.x, headPos.y, true)) {
 			lives--;
+			return true;
 		}
 		return false;
 	}
