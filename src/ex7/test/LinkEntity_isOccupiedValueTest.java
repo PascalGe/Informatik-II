@@ -14,5 +14,4 @@ class LinkEntity_isOccupiedValueTest extends TestCase {
 		boolean b = snake.isOccupied(2, 1);
 		assertEquals(true, b);
 	}
-
 }
