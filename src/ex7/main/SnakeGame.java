@@ -19,6 +19,8 @@ import javax.swing.Timer;
 
 /**
  * The SnakeGame implements the actual control structures to run the game loop
+ * 
+ * @author Informatik II, Pascal Gepperth (4005085)
  */
 public class SnakeGame implements ActionListener, MouseListener {
 	/**
@@ -33,6 +35,11 @@ public class SnakeGame implements ActionListener, MouseListener {
 
 	public static Color arenaBackground = new Color(204, 204, 255); // periwinkle
 	public static Color arenaBarrier = new Color(64, 0, 255); // ultramarine
+
+	/**
+	 * The random for random spawns.
+	 */
+	public static Random random = new Random();
 
 	/**
 	 * The snake object, controllable with key inputs.
@@ -157,19 +164,29 @@ public class SnakeGame implements ActionListener, MouseListener {
 	private int initialGameSpeed = 150;
 
 	/**
+	 * The initial minimum game speed allowed.
+	 */
+	private int initialMinGameSpeed = 50;
+
+	/**
+	 * The initial maximum game speed allowed.
+	 */
+	private int initialMaxGameSpeed = 200;
+
+	/**
 	 * Every currenGameSpeed Milliseconds, the snake moves a step.
 	 */
-	private int currentGameSpeed = 150;
+	private int currentGameSpeed;
 
 	/**
 	 * The minimum game speed allowed.
 	 */
-	private int minGameSpeed = 50;
+	private int minGameSpeed;
 
 	/**
 	 * The maximum game speed allowed.
 	 */
-	private int maxGameSpeed = 200;
+	private int maxGameSpeed;
 
 	/**
 	 * The level the snake is currently in.
@@ -232,6 +249,10 @@ public class SnakeGame implements ActionListener, MouseListener {
 
 		level = 1;
 		currentGameSpeed = initialGameSpeed;
+		// reset min and max speed by restarting the game
+		minGameSpeed = initialMinGameSpeed;
+		maxGameSpeed = initialMaxGameSpeed;
+
 		resetGameState();
 	}
 
@@ -260,6 +281,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 	 */
 	private void spawnFood() {
 
+		// randomize location
 		Random r = new Random();
 		int x, y;
 		do {
@@ -268,7 +290,6 @@ public class SnakeGame implements ActionListener, MouseListener {
 
 		} while (snake.isOccupied(x, y) || barrier.isOccupied(x, y));
 		food = new Food(x, y);
-		// TODO: spawn food randomly on (unoccupied) terrain
 	}
 
 	/**
@@ -288,14 +309,14 @@ public class SnakeGame implements ActionListener, MouseListener {
 	 */
 	private void pauseOnOff() {
 
-		// TODO: implement pause trigger mechanism
 		if (isRunning) {
 			timer.stop();
+			// repaint control area (no automatic repaint (timer already stopped))
 			myPanel.repaint();
 		} else {
 			timer.restart();
 		}
-
+		// toggle isRunning
 		isRunning = !isRunning;
 	}
 
@@ -401,7 +422,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 		g.fillRect(snakeArea.x, snakeArea.y, snakeArea.width, snakeArea.height);
 
 		barrier.draw(g, snakeArea, tileSize);
-		food.draw(g, snakeArea, tileSize); // TODO: activate when implemented
+		food.draw(g, snakeArea, tileSize);
 		snake.draw(g, snakeArea, tileSize);
 	}
 
@@ -460,8 +481,6 @@ public class SnakeGame implements ActionListener, MouseListener {
 	class SnakeKeyAdapter extends KeyAdapter {
 		public void keyPressed(KeyEvent e) {
 
-			// TODO: add a pause button 'P'
-
 			switch (e.getKeyCode()) {
 			case KeyEvent.VK_UP:
 				snakeDirection = 0;
@@ -476,15 +495,21 @@ public class SnakeGame implements ActionListener, MouseListener {
 				snakeDirection = 3;
 				break;
 			case KeyEvent.VK_PLUS:
+			case KeyEvent.VK_ADD:
 				if (currentGameSpeed - 5 >= minGameSpeed) {
 					currentGameSpeed -= 5;
 					timer.setDelay(currentGameSpeed);
+					if (!isRunning)
+						myPanel.repaint();
 				}
 				break;
 			case KeyEvent.VK_MINUS:
+			case KeyEvent.VK_SUBTRACT:
 				if (currentGameSpeed + 5 <= maxGameSpeed) {
 					currentGameSpeed += 5;
 					timer.setDelay(currentGameSpeed);
+					if (!isRunning)
+						myPanel.repaint();
 				}
 				break;
 			case KeyEvent.VK_P:
@@ -495,5 +520,4 @@ public class SnakeGame implements ActionListener, MouseListener {
 			}
 		}
 	}
-
 }

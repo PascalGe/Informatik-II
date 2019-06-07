@@ -7,6 +7,8 @@ import java.awt.Rectangle;
 
 /**
  * A class to handle labels, goals, scores itself and a method to draw them.
+ * 
+ * @author Informatik II
  */
 public class GameScore {
 
@@ -16,10 +18,10 @@ public class GameScore {
 
 	private static Font myBaseFont = new Font("Times", Font.BOLD, 16);
 
-	public GameScore(String[] _labels, int[] _scores, int[] _goals) {
-		labels = _labels;
-		scores = _scores;
-		goals = _goals;
+	public GameScore(String[] labels, int[] scores, int[] goals) {
+		this.labels = labels;
+		this.scores = scores;
+		this.goals = goals;
 	}
 
 	public void paintScore(Graphics2D g, Rectangle area, int tileSize) {
@@ -37,7 +39,6 @@ public class GameScore {
 			g.drawString(labels[i] + ": " + scores[i] + " / " + goals[i], area.x + area.width / tileSize - tileSize / 2,
 					firstHeight + i * heightSteps);
 		}
-
 		g.setFont(temp);
 	}
 }

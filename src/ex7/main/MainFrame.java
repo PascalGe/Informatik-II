@@ -9,7 +9,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * The main game frame hosts the SnakeGame
+ * The main game frame hosts the SnakeGame.
+ * 
+ * @author Informatik II, Pascal Gepperth (4005085)
  */
 public class MainFrame {
 
