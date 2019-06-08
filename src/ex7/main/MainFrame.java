@@ -5,8 +5,15 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
+import javax.swing.Icon;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+
+import ex7.main.log.OptionListener;
 
 /**
  * The main game frame hosts the SnakeGame.
@@ -15,10 +22,32 @@ import javax.swing.JPanel;
  */
 public class MainFrame {
 
+	public static final String ACTION_ENABLE_UHD = "Enable UHD";
+
 	/**
 	 * The Window JFrame in which the game is placed
 	 */
 	private JFrame gameFrame;
+
+	/**
+	 * The JMenuBar for the menus to place in.
+	 */
+	private JMenuBar menuBar;
+
+	/**
+	 * The JMenu for the options.
+	 */
+	private JMenu optionMenu;
+
+	/**
+	 * The different dialogue options.
+	 */
+	private JMenuItem setFoodItmes;
+
+	/**
+	 * The different toggle options
+	 */
+	private JCheckBoxMenuItem enableUHD, enablePowerups, enableInfinityTunnels;
 
 	/**
 	 * Frame width upon creation.
@@ -98,13 +127,29 @@ public class MainFrame {
 		if (thePanel != null) { // remove the old panel if one was already created.
 			gameFrame.remove(thePanel);
 		}
+		// create option menu
+		menuBar = new JMenuBar();
+
+		// fill menu bar
+		optionMenu = new JMenu("Options");
+		menuBar.add(optionMenu);
+
 		// now create a new panel and initialize the game within it.
 		thePanel = new MainFrame.MyPanel();
 
-		initFullGamePanel(panelWidth, panelHeight);
+		initFullGamePanel(panelWidth, panelHeight - menuBar.getHeight());
 		theGame = new SnakeGame(this.gameFrame, this.thePanel, this.gameArea, this.controlArea);
 
+		// create actionListener for option menu
+		OptionListener listener = new OptionListener(theGame);
+
+		// fill option menu
+		enableUHD = new JCheckBoxMenuItem(ACTION_ENABLE_UHD);
+		enableUHD.addActionListener(listener);
+		optionMenu.add(enableUHD);
+
 		gameFrame.setTitle(theGame.getName());
+		gameFrame.setJMenuBar(menuBar);
 		gameFrame.add(thePanel);
 		gameFrame.validate();
 	}

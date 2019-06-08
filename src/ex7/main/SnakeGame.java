@@ -10,12 +10,18 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
 
 /**
  * The SnakeGame implements the actual control structures to run the game loop
@@ -26,12 +32,19 @@ public class SnakeGame implements ActionListener, MouseListener {
 	/**
 	 * The colors that are supported by the game.
 	 */
-	public static Color snakeHead = new Color(220, 20, 60); // crimson
-	public static Color snakeBody = new Color(150, 0, 24); // carmine
+	public static Color snakeHeadColor = new Color(220, 20, 60); // crimson
+	public static Color snakeBodyColor = new Color(150, 0, 24); // carmine
+
+	public static BufferedImage snakeHeadImage;
+	public static BufferedImage snakeBodyImage;
 
 	public static Color foodBasic = new Color(62, 180, 137); // mint
 	public static Color foodSuper = new Color(116, 195, 101); // mantis
 	public static Color foodUltra = new Color(192, 255, 0); // lime
+
+	public static BufferedImage foodBasicImage;
+	public static BufferedImage foodSuperImage;
+	public static BufferedImage foodUltraImage;
 
 	public static Color arenaBackground = new Color(204, 204, 255); // periwinkle
 	public static Color arenaBarrier = new Color(64, 0, 255); // ultramarine
@@ -202,6 +215,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 	 * Reference to the frame in which the game is played.
 	 */
 	private JFrame inFrame;
+	private static boolean uhdEnabled;
 
 	/**
 	 * Constructor for this game. Constructs the game and starts it immediately.
@@ -217,6 +231,17 @@ public class SnakeGame implements ActionListener, MouseListener {
 	public SnakeGame(JFrame inFrame, JPanel yourPanel, Rectangle gameArea, Rectangle controlArea) {
 		this.gameArea = new Rectangle(gameArea);
 		this.controlArea = new Rectangle(controlArea);
+
+		try {
+			snakeHeadImage = ImageIO.read(this.getClass().getResource("img/snakeHeadUp.png"));
+			snakeBodyImage = ImageIO.read(this.getClass().getResource("img/snakeBody0.png"));
+
+			foodBasicImage = ImageIO.read(this.getClass().getResource("img/foodMouse.png"));
+			foodSuperImage = ImageIO.read(this.getClass().getResource("img/foodPizza.png"));
+			foodUltraImage = ImageIO.read(this.getClass().getResource("img/foodElephant.png"));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		this.myPanel = yourPanel;
 
@@ -346,7 +371,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 				newDirection.x = 0;
 				newDirection.y = -1;
 				break;
-			case 1: // Left
+			case 1: // Right
 				newDirection.x = 1;
 				newDirection.y = 0;
 				break;
@@ -354,7 +379,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 				newDirection.x = 0;
 				newDirection.y = 1;
 				break;
-			case 3: // Right
+			case 3: // Left
 				newDirection.x = -1;
 				newDirection.y = 0;
 				break;
@@ -422,8 +447,8 @@ public class SnakeGame implements ActionListener, MouseListener {
 		g.fillRect(snakeArea.x, snakeArea.y, snakeArea.width, snakeArea.height);
 
 		barrier.draw(g, snakeArea, tileSize);
-		food.draw(g, snakeArea, tileSize);
-		snake.draw(g, snakeArea, tileSize);
+		food.draw(g, snakeArea, tileSize, uhdEnabled);
+		snake.draw(g, snakeArea, tileSize, uhdEnabled);
 	}
 
 	public void paintControlArea(Graphics2D g) {
@@ -519,5 +544,15 @@ public class SnakeGame implements ActionListener, MouseListener {
 				System.out.println("Key Pressed: " + e + " " + e.getKeyCode());
 			}
 		}
+	}
+
+	public void enableUHD(boolean uhdEnabled) {
+		this.uhdEnabled = uhdEnabled;
+		System.out.println("repaint");
+		myPanel.repaint();
+	}
+
+	public static boolean isUHDEnabled() {
+		return uhdEnabled;
 	}
 }

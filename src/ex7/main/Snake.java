@@ -1,5 +1,7 @@
 package ex7.main;
 
+import java.awt.geom.AffineTransform;
+
 /**
  * The snake has two constructors, the first one (public) is for the head only,
  * the other one for the rest of the body (private). As the snake moves, it can
@@ -9,8 +11,6 @@ package ex7.main;
  * @author Informatik II, Pascal Gepperth (4005085)
  */
 public class Snake extends LinkEntity {
-
-	private boolean alive; // TODO unused!!
 
 	/**
 	 * Number of lives.
@@ -32,9 +32,8 @@ public class Snake extends LinkEntity {
 	 * @param startLength - length of the snake
 	 */
 	public Snake(int x, int y, int lives, int startLength) {
-		super(x, y, SnakeGame.snakeHead);
+		super(x, y, SnakeGame.snakeHeadColor, SnakeGame.snakeHeadImage);
 
-		alive = true;
 		this.lives = lives;
 		wait = 0;
 
@@ -51,9 +50,8 @@ public class Snake extends LinkEntity {
 	 * @param n   - number of steps waiting before move.
 	 */
 	private Snake(Vector pos, Vector dir, int n) {
-		super(pos.x, pos.y, SnakeGame.snakeBody);
+		super(pos.x, pos.y, SnakeGame.snakeBodyColor, SnakeGame.snakeBodyImage);
 
-		alive = true;
 		wait = n;
 
 		this.dir = dir;
@@ -69,6 +67,15 @@ public class Snake extends LinkEntity {
 		if (!isLast()) {
 			((Snake) getNext()).changeDirection(dir);
 		}
+		if (newDir.x == 1) {
+			setRotation(ROTATION_RIGHT);
+		} else if (newDir.x == -1) {
+			setRotation(ROTATION_LEFT);
+		} else if (newDir.y == 1) {
+			setRotation(ROTATION_DOWN);
+		} else {
+			setRotation(ROTATION_UP);
+		}
 		dir = newDir;
 	}
 
@@ -77,8 +84,7 @@ public class Snake extends LinkEntity {
 	 * @return true, if there are still lives left.
 	 */
 	public boolean isAlive() {
-		alive = lives > 0;
-		return alive;
+		return lives > 0;
 	}
 
 	/**
@@ -137,15 +143,13 @@ public class Snake extends LinkEntity {
 	public boolean move(Food food, Barrier barrier) {
 		if (barrier.isOccupied(pos.x + dir.x, pos.y + dir.y)) {
 			lives = 0;
-			alive = false;
 			return false;
 		}
 		move();
 		if (eat(food)) {
 			return true;
-		} else if (selfCollision(pos) && --lives == 0) {
-			alive = false;
 		}
+		selfCollision(pos);
 		return false;
 	}
 

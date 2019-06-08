@@ -3,6 +3,8 @@ package ex7.main;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 
 /**
  * 
@@ -10,6 +12,16 @@ import java.awt.Rectangle;
  *
  */
 public abstract class LinkEntity {
+
+	protected static final int ROTATION_UP = 1;
+	protected static final int ROTATION_LEFT = 2;
+	protected static final int ROTATION_RIGHT = 3;
+	protected static final int ROTATION_DOWN = 4;
+
+	/**
+	 * Rotation of the entity.
+	 */
+	private int rotation;
 
 	/**
 	 * Location of the entity.
@@ -20,6 +32,16 @@ public abstract class LinkEntity {
 	 * Color of the entity.
 	 */
 	protected Color col;
+
+	/**
+	 * Image of the entity.
+	 */
+	protected BufferedImage img;
+
+	/**
+	 * Transformation to rotate image.
+	 */
+	protected AffineTransform at;
 
 	/**
 	 * Next entity.
@@ -33,8 +55,7 @@ public abstract class LinkEntity {
 	 * @param y - coordinate.
 	 */
 	public LinkEntity(int x, int y) {
-		pos = new Vector(x, y);
-		setNext(this);
+		this(x, y, null, null);
 	}
 
 	/**
@@ -45,8 +66,19 @@ public abstract class LinkEntity {
 	 * @param col - color
 	 */
 	public LinkEntity(int x, int y, Color col) {
-		this(x, y);
+		this(x, y, col, null);
+	}
+
+	public LinkEntity(int x, int y, BufferedImage img) {
+		this(x, y, null, img);
+	}
+
+	public LinkEntity(int x, int y, Color col, BufferedImage img) {
+		pos = new Vector(x, y);
+		setNext(this);
 		this.col = col;
+		this.img = img;
+		at = new AffineTransform();
 	}
 
 	/**
@@ -56,6 +88,14 @@ public abstract class LinkEntity {
 		return pos;
 	}
 
+	public void setRotation(int rotation) {
+		this.rotation = rotation;
+	}
+
+	public int getRotation() {
+		return rotation;
+	}
+
 	/**
 	 * Draws the entity.
 	 * 
@@ -63,12 +103,56 @@ public abstract class LinkEntity {
 	 * @param area     - the area to paint.
 	 * @param tileSize - the size of a tile.
 	 */
-	public void draw(Graphics2D g, Rectangle area, int tileSize) {
+	private void drawBasic(Graphics2D g, Rectangle area, int tileSize) {
 		g.setColor(col);
 		g.fillRect(area.x + pos.x * tileSize, area.y + pos.y * tileSize, tileSize, tileSize);
 		if (!isLast()) {
-			next.draw(g, area, tileSize);
+			next.drawBasic(g, area, tileSize);
 		}
+	}
+
+	public void draw(Graphics2D g, Rectangle area, int tileSize) {
+		draw(g, area, tileSize, false);
+	}
+
+	public void draw(Graphics2D g, Rectangle area, int tileSize, boolean uhd) {
+		if (uhd && img != null) {
+			drawAdvanced(g, area, tileSize);
+		} else {
+			drawBasic(g, area, tileSize);
+		}
+	}
+
+	private void drawAdvanced(Graphics2D g, Rectangle area, int tileSize) {
+		adjustImage(area, tileSize);
+		g.drawImage(img, at, null);
+		if (!isLast()) {
+			next.drawAdvanced(g, area, tileSize);
+		}
+	}
+
+	private void adjustImage(Rectangle area, int tileSize) {
+		int theta;
+		switch (rotation) {
+		case ROTATION_LEFT:
+			theta = 270;
+			break;
+		case ROTATION_RIGHT:
+			theta = 90;
+			break;
+		case ROTATION_DOWN:
+			theta = 180;
+			break;
+		default:
+			theta = 0;
+			break;
+		}
+		// move image to location
+		at.setToTranslation(area.x + pos.x * tileSize, area.y + pos.y * tileSize);
+		// center image at location
+		at.translate((tileSize - img.getWidth()) / 2, (tileSize - img.getHeight()) / 2);
+		// rotate image
+		at.rotate(Math.toRadians(theta), img.getWidth() / 2, img.getHeight() / 2);
 	}
 
 	/**

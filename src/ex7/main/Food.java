@@ -22,10 +22,13 @@ public class Food extends LinkEntity {
 		value = SnakeGame.random.nextInt(SnakeGame.maxFoodValue) + 1;
 		if (value == SnakeGame.maxFoodValue) {
 			col = SnakeGame.foodUltra;
+			img = SnakeGame.foodUltraImage;
 		} else if (value >= SnakeGame.maxFoodValue * .8) {
 			col = SnakeGame.foodSuper;
+			img = SnakeGame.foodSuperImage;
 		} else {
 			col = SnakeGame.foodBasic;
+			img = SnakeGame.foodBasicImage;
 		}
 	}
 
