@@ -202,6 +202,17 @@ public abstract class LinkEntity {
 	}
 
 	/**
+	 * Checks the entity and it's following occupying the location the vecor is
+	 * pointing to.
+	 * 
+	 * @param vec - coordinates.
+	 * @return true, if the entity or one of the following occupies (x,y).
+	 */
+	public boolean isOccupied(Vector vec) {
+		return isOccupied(vec.x, vec.y, false);
+	}
+
+	/**
 	 * Checks the entity and it's following occupying (x,y) and may clips the
 	 * occupied one.
 	 * 

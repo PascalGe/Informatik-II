@@ -1,6 +1,8 @@
 package ex7.main;
 
-import java.awt.geom.AffineTransform;
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 
 /**
  * The snake has two constructors, the first one (public) is for the head only,
@@ -22,6 +24,8 @@ public class Snake extends LinkEntity {
 	 */
 	private int wait;
 	private Vector dir;
+
+	private boolean ignoreCollision = false;
 
 	/**
 	 * Creates a new snake at (x,y) with given length and number of lives.
@@ -136,37 +140,56 @@ public class Snake extends LinkEntity {
 	 * Checks for colliding with barrier. If no collision, moves the snake and calls
 	 * eat() and selfCollison().
 	 * 
-	 * @param food    - food that can be eaten.
-	 * @param barrier - barrier that can be collided with.
+	 * @param food            - food that can be eaten.
+	 * @param barriersArround - barrier that can be collided with.
 	 * @return true, if snake ate some food.
 	 */
-	public boolean move(Food food, Barrier barrier) {
-		if (barrier.isOccupied(pos.x + dir.x, pos.y + dir.y)) {
+	public boolean move(Food food, Barrier barriersArround, Barrier barriersInside, int rows, int cols) {
+		if (!ignoreCollision && barriersArround.isOccupied(pos.x + dir.x, pos.y + dir.y)) {
+			lives = 0;
+			return false;
+		} else if (!ignoreCollision && barriersInside.isOccupied(getNextPos(rows, cols))) {
 			lives = 0;
 			return false;
 		}
-		move();
+		move(rows, cols);
 		if (eat(food)) {
 			return true;
 		}
-		selfCollision(pos);
+		if (!ignoreCollision) {
+			selfCollision(pos);
+		}
 		return false;
 	}
 
 	/**
 	 * Moves snake part, if not waiting. Otherwise decreases waiting.
 	 */
-	private void move() {
+	private void move(int rows, int cols) {
 		if (wait > 0) {
 			wait--;
 		} else {
-			pos.x += dir.x;
-			pos.y += dir.y;
+			pos = getNextPos(rows, cols);
 		}
 		// move next body part
 		if (!isLast()) {
-			((Snake) getNext()).move();
+			((Snake) getNext()).move(rows, cols);
 		}
+	}
+
+	private Vector getNextPos(int rows, int cols) {
+		Vector newPos = new Vector(pos.x + dir.x, pos.y + dir.y);
+		if (newPos.x < 0) {
+			newPos.x = cols - 1;
+		} else if (newPos.x > cols - 1) {
+			newPos.x = 0;
+		}
+		if (newPos.y < 0) {
+			newPos.y = rows - 1;
+		} else if (newPos.y > rows - 1) {
+			newPos.y = 0;
+		}
+		return newPos;
 	}
 
 	/**
@@ -183,5 +206,20 @@ public class Snake extends LinkEntity {
 			return true;
 		}
 		return false;
+	}
+
+	public void setIgnoreCollision(boolean ignoreCollision) {
+		this.ignoreCollision = ignoreCollision;
+	}
+
+	@Override
+	public void draw(Graphics2D g, Rectangle area, int tileSize, boolean uhd) {
+		if (ignoreCollision) {
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .5f));
+			super.draw(g, area, tileSize, uhd);
+			g.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+		} else {
+			super.draw(g, area, tileSize, uhd);
+		}
 	}
 }

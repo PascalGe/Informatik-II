@@ -11,8 +11,6 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
@@ -21,14 +19,15 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import sun.reflect.ReflectionFactory.GetReflectionFactoryAction;
-
 /**
  * The SnakeGame implements the actual control structures to run the game loop
  * 
  * @author Informatik II, Pascal Gepperth (4005085)
  */
 public class SnakeGame implements ActionListener, MouseListener {
+
+	private static final int MINIMUM_POWER_UP_WAITING_TIME = 100;
+	private static final int MAXIMUM_POWER_UP_WAITING_TIME = 150;
 	/**
 	 * The colors that are supported by the game.
 	 */
@@ -49,6 +48,12 @@ public class SnakeGame implements ActionListener, MouseListener {
 	public static Color arenaBackground = new Color(204, 204, 255); // periwinkle
 	public static Color arenaBarrier = new Color(64, 0, 255); // ultramarine
 
+	public static BufferedImage arenaBarrierImage;
+
+	public static Color powerUpColor = new Color(255, 255, 0); // yellow
+
+	public static BufferedImage powerUpImage;
+
 	/**
 	 * The random for random spawns.
 	 */
@@ -67,7 +72,12 @@ public class SnakeGame implements ActionListener, MouseListener {
 	/**
 	 * The barrier object, surrounds the game area and contact should be avoided.
 	 */
-	private Barrier barrier;
+	private Barrier barrierArround;
+
+	/**
+	 * The barrier object, inside the game area and contact should be avoided.
+	 */
+	private Barrier barrierInside;
 
 	/**
 	 * The timer controls the game speed by iteratively invoking action events -
@@ -157,6 +167,11 @@ public class SnakeGame implements ActionListener, MouseListener {
 	public static int maxFoodValue = 10;
 
 	/**
+	 * The basic powerUp effect time.
+	 */
+	public static int basicPowerUpEffectTime = 50;
+
+	/**
 	 * Number of lives the snake initially has.
 	 */
 	private final int snakeLives = 5;
@@ -215,7 +230,33 @@ public class SnakeGame implements ActionListener, MouseListener {
 	 * Reference to the frame in which the game is played.
 	 */
 	private JFrame inFrame;
-	private static boolean uhdEnabled;
+
+	/**
+	 * Boolean that holds the UHD state.
+	 */
+	private boolean uhdEnabled;
+
+	/**
+	 * Boolean that holds the Powerups state.
+	 */
+	private boolean powerupsEnabled;
+
+	/**
+	 * The powerUp item.
+	 */
+	private PowerUp powerUp;
+
+	/**
+	 * The counter that holds the number of steps the powerUp is available. If
+	 * there's no powerUp, it holds the number of steps till the next powerUp will
+	 * spawn.
+	 */
+	private int powerUpLivingCounter;
+
+	/**
+	 * Boolean that holds the infinityTunnel state.
+	 */
+	private boolean infinityEnabled;
 
 	/**
 	 * Constructor for this game. Constructs the game and starts it immediately.
@@ -239,6 +280,9 @@ public class SnakeGame implements ActionListener, MouseListener {
 			foodBasicImage = ImageIO.read(this.getClass().getResource("img/foodMouse.png"));
 			foodSuperImage = ImageIO.read(this.getClass().getResource("img/foodPizza.png"));
 			foodUltraImage = ImageIO.read(this.getClass().getResource("img/foodElephant.png"));
+
+//			arenaBarrierImage = ImageIO.read(this.getClass().getResource("img/snakeBody3.png"));
+			powerUpImage = ImageIO.read(this.getClass().getResource("img/snakeBody1.png"));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -295,8 +339,15 @@ public class SnakeGame implements ActionListener, MouseListener {
 		timer.setDelay(currentGameSpeed);
 
 		snake = new Snake(initialSnakePos.x, initialSnakePos.y, snakeLives, initialSnakeLength);
-		barrier = new Barrier(gameArea, level - 1);
+
+		barrierArround = Barrier.createSurrounding(gameArea); // new Barrier(gameArea, level - 1);
+		barrierArround.setUnused(infinityEnabled);
+		barrierInside = Barrier.createRandom(gameArea, level - 1);
+
 		spawnFood();
+
+		destroyPowerUp();
+		resetPowerUpLivingCounter();
 
 		myPanel.repaint();
 	}
@@ -307,14 +358,32 @@ public class SnakeGame implements ActionListener, MouseListener {
 	private void spawnFood() {
 
 		// randomize location
-		Random r = new Random();
 		int x, y;
 		do {
-			x = r.nextInt(numColumns);
-			y = r.nextInt(numRows);
-
-		} while (snake.isOccupied(x, y) || barrier.isOccupied(x, y));
+			x = random.nextInt(numColumns);
+			y = random.nextInt(numRows);
+		} while (snake.isOccupied(x, y) || barrierArround.isOccupied(x, y) || barrierInside.isOccupied(x, y));
 		food = new Food(x, y);
+	}
+
+	/**
+	 * Creates a powerUp on a random position.
+	 */
+	private void spawnPowerUp() {
+		int x, y;
+		do {
+			x = random.nextInt(numColumns);
+			y = random.nextInt(numRows);
+		} while (snake.isOccupied(x, y) || barrierArround.isOccupied(x, y) || barrierInside.isOccupied(x, y)
+				|| food.isOccupied(x, y));
+		powerUp = new PowerUp(x, y);
+	}
+
+	/**
+	 * Destroys the powerUp.
+	 */
+	private void destroyPowerUp() {
+		powerUp = null;
 	}
 
 	/**
@@ -386,9 +455,52 @@ public class SnakeGame implements ActionListener, MouseListener {
 			}
 			snake.changeDirection(newDirection);
 
-			if (snake.move(food, barrier)) {
+			if (snake.move(food, barrierArround, barrierInside, numRows, numColumns)) {
 				spawnFood();
 				foodEaten++;
+			}
+
+			if (powerupsEnabled) {
+				// is powerUp here?
+				if (powerUp != null) {
+					if (powerUp.isOccupied(snake.getPos())) {
+						// snake eats powerUp
+						powerUp.setUsed();
+						snake.setIgnoreCollision(true);
+					} else {
+						if (powerUp.isUsed() && powerUp.getTimeOfEffect() > 0) {
+							powerUp.reduceTimeOfEffect();
+							if (powerUp.getTimeOfEffect() < 10 && (powerUp.getTimeOfEffect() % 2) == 0) {
+								barrierArround.setOpacity(.8f);
+								barrierInside.setOpacity(.8f);
+							} else {
+								barrierArround.setOpacity(1f);
+								barrierInside.setOpacity(1f);
+							}
+						} else {
+							barrierArround.setOpacity(1f);
+							barrierInside.setOpacity(1f);
+							snake.setIgnoreCollision(false);
+						}
+					}
+				}
+				// reduce living / waiting time
+				powerUpLivingCounter--;
+				if (powerUpLivingCounter <= 0) {
+					if (powerUp != null) {
+						// destroy if notInUse
+						if (!powerUp.isUsed() || powerUp.getTimeOfEffect() <= 0) {
+							barrierArround.setOpacity(1f);
+							barrierInside.setOpacity(1f);
+							destroyPowerUp();
+							resetPowerUpLivingCounter();
+						}
+					} else {
+						// create
+						spawnPowerUp();
+						resetPowerUpLivingCounter();
+					}
+				}
 			}
 		}
 
@@ -412,6 +524,11 @@ public class SnakeGame implements ActionListener, MouseListener {
 							+ "and have eaten " + foodEaten + " itmes.\n" + "T R Y    A G A I N   !!!");
 			initFullSnakeGamePanel();
 		}
+	}
+
+	private void resetPowerUpLivingCounter() {
+		powerUpLivingCounter = random.nextInt(MAXIMUM_POWER_UP_WAITING_TIME - MINIMUM_POWER_UP_WAITING_TIME)
+				+ MINIMUM_POWER_UP_WAITING_TIME;
 	}
 
 	/**
@@ -446,8 +563,12 @@ public class SnakeGame implements ActionListener, MouseListener {
 		g.setColor(arenaBackground);
 		g.fillRect(snakeArea.x, snakeArea.y, snakeArea.width, snakeArea.height);
 
-		barrier.draw(g, snakeArea, tileSize);
+		barrierArround.draw(g, snakeArea, tileSize, uhdEnabled);
+		barrierInside.draw(g, snakeArea, tileSize, uhdEnabled);
 		food.draw(g, snakeArea, tileSize, uhdEnabled);
+		if (powerupsEnabled && powerUp != null) {
+			powerUp.draw(g, snakeArea, tileSize, uhdEnabled);
+		}
 		snake.draw(g, snakeArea, tileSize, uhdEnabled);
 	}
 
@@ -538,7 +659,13 @@ public class SnakeGame implements ActionListener, MouseListener {
 				}
 				break;
 			case KeyEvent.VK_P:
+			case KeyEvent.VK_SPACE:
 				pauseOnOff();
+				break;
+			case KeyEvent.VK_ENTER:
+				if (!isRunning) {
+					pauseOnOff();
+				}
 				break;
 			default:
 				System.out.println("Key Pressed: " + e + " " + e.getKeyCode());
@@ -548,11 +675,26 @@ public class SnakeGame implements ActionListener, MouseListener {
 
 	public void enableUHD(boolean uhdEnabled) {
 		this.uhdEnabled = uhdEnabled;
-		System.out.println("repaint");
 		myPanel.repaint();
 	}
 
-	public static boolean isUHDEnabled() {
+	public boolean isUHDEnabled() {
 		return uhdEnabled;
+	}
+
+	public void enablePowerups(boolean powerupsEnabled) {
+		this.powerupsEnabled = powerupsEnabled;
+		powerUpLivingCounter = random.nextInt(MINIMUM_POWER_UP_WAITING_TIME);
+		if (!powerupsEnabled) {
+			snake.setIgnoreCollision(false);
+			powerUp = null;
+		}
+		myPanel.repaint();
+	}
+
+	public void enableInfinityTunnels(boolean infinityEnabled) {
+		this.infinityEnabled = infinityEnabled;
+		barrierArround.setUnused(infinityEnabled);
+		myPanel.repaint();
 	}
 }

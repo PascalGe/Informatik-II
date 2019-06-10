@@ -5,13 +5,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 
-import javax.swing.Icon;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import ex7.main.log.OptionListener;
 
@@ -23,6 +24,10 @@ import ex7.main.log.OptionListener;
 public class MainFrame {
 
 	public static final String ACTION_ENABLE_UHD = "Enable UHD";
+
+	public static final String ACTION_ENABLE_POWERUPS = "Enable PowerUp";
+
+	public static final String ACTION_ENABLE_INFINITY_TUNNELS = "Enable Infinity-Tunnels";
 
 	/**
 	 * The Window JFrame in which the game is placed
@@ -42,7 +47,7 @@ public class MainFrame {
 	/**
 	 * The different dialogue options.
 	 */
-	private JMenuItem setFoodItmes;
+	private JMenuItem setFoodItmes, setSize;
 
 	/**
 	 * The different toggle options
@@ -137,7 +142,7 @@ public class MainFrame {
 		// now create a new panel and initialize the game within it.
 		thePanel = new MainFrame.MyPanel();
 
-		initFullGamePanel(panelWidth, panelHeight - menuBar.getHeight());
+		initFullGamePanel(panelWidth, panelHeight - menuBar.getPreferredSize().height);
 		theGame = new SnakeGame(this.gameFrame, this.thePanel, this.gameArea, this.controlArea);
 
 		// create actionListener for option menu
@@ -147,6 +152,14 @@ public class MainFrame {
 		enableUHD = new JCheckBoxMenuItem(ACTION_ENABLE_UHD);
 		enableUHD.addActionListener(listener);
 		optionMenu.add(enableUHD);
+
+		enablePowerups = new JCheckBoxMenuItem(ACTION_ENABLE_POWERUPS);
+		enablePowerups.addActionListener(listener);
+		optionMenu.add(enablePowerups);
+
+		enableInfinityTunnels = new JCheckBoxMenuItem(ACTION_ENABLE_INFINITY_TUNNELS);
+		enableInfinityTunnels.addActionListener(listener);
+		optionMenu.add(enableInfinityTunnels);
 
 		gameFrame.setTitle(theGame.getName());
 		gameFrame.setJMenuBar(menuBar);
@@ -217,6 +230,18 @@ public class MainFrame {
 	 * @param args Arguments are not considered here.
 	 */
 	public static void main(String[] args) {
+		try {
+			// Set System L&F
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
 		// Create a class object that exists as long as its JFrame is visible.
 		new MainFrame();
 	}

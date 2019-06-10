@@ -20,9 +20,6 @@ public class OptionListener implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		switch (e.getActionCommand()) {
 		case MainFrame.ACTION_ENABLE_UHD:
-			System.out.println("UHD");
-			boolean b = ((JCheckBoxMenuItem) e.getSource()).getState();
-			System.out.println(b);
 
 			if (((JCheckBoxMenuItem) e.getSource()).getState()) {
 				theGame.enableUHD(true);
@@ -30,7 +27,20 @@ public class OptionListener implements ActionListener {
 				theGame.enableUHD(false);
 			}
 			break;
-
+		case MainFrame.ACTION_ENABLE_POWERUPS:
+			if (((JCheckBoxMenuItem) e.getSource()).getState()) {
+				theGame.enablePowerups(true);
+			} else {
+				theGame.enablePowerups(false);
+			}
+			break;
+		case MainFrame.ACTION_ENABLE_INFINITY_TUNNELS:
+			if (((JCheckBoxMenuItem) e.getSource()).getState()) {
+				theGame.enableInfinityTunnels(true);
+			} else {
+				theGame.enableInfinityTunnels(false);
+			}
+			break;
 		default:
 			System.out.println("Anything!");
 			break;
