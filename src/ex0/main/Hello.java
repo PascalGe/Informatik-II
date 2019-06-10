@@ -8,7 +8,6 @@ package ex0.main;
 public class Hello {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		System.out.println("Pascal Gepperth");
 		System.out.println("6 + 2 = " + plus(6,2));
 		
