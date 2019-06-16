@@ -18,12 +18,26 @@ public class GameScore {
 
 	private static Font myBaseFont = new Font("Times", Font.BOLD, 16);
 
+	/**
+	 * Constructor
+	 * 
+	 * @param labels - the text labels.
+	 * @param scores - the current scores.
+	 * @param goals  - the goals to reach.
+	 */
 	public GameScore(String[] labels, int[] scores, int[] goals) {
 		this.labels = labels;
 		this.scores = scores;
 		this.goals = goals;
 	}
 
+	/**
+	 * Paints the current GameScore.
+	 * 
+	 * @param g        - the 2DGraphics object.
+	 * @param area     - the area to paint in.
+	 * @param tileSize - the tile size.
+	 */
 	public void paintScore(Graphics2D g, Rectangle area, int tileSize) {
 		Font temp = g.getFont();
 		g.setFont(myBaseFont);

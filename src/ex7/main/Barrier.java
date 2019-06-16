@@ -95,6 +95,9 @@ public class Barrier extends LinkEntity {
 		return false;
 	}
 
+	/**
+	 * Extends the current barrier by new surrounding barriers.
+	 */
 	private void extendSurrounding() {
 		// surrounding barrier
 		for (int y = 0; y < borderArea.height; y++) {
@@ -106,6 +109,11 @@ public class Barrier extends LinkEntity {
 		}
 	}
 
+	/**
+	 * Extends the current barrier by new random barriers.
+	 * 
+	 * @param count - the count, how many barriers should be created.
+	 */
 	private void extendRandom(int count) {
 		// spawn random barrier based on the level at free place
 		int x, y;
@@ -118,18 +126,36 @@ public class Barrier extends LinkEntity {
 		}
 	}
 
+	/**
+	 * Creates new surrounding barriers.
+	 * 
+	 * @param gameArea - the area to surround by the new barriers.
+	 * @return the surrounding barriers.
+	 */
 	public static Barrier createSurrounding(Rectangle gameArea) {
 		Barrier surr = new Barrier(gameArea);
 		surr.extendSurrounding();
 		return (Barrier) surr.getNext();
 	}
 
+	/**
+	 * Creates new random barriers.
+	 * 
+	 * @param gameArea - the area to place in the new barriers.
+	 * @param count    - the count, how many barriers should be created.
+	 * @return the random barriers.
+	 */
 	public static Barrier createRandom(Rectangle gameArea, int count) {
 		Barrier surr = new Barrier(gameArea);
 		surr.extendRandom(count);
 		return (Barrier) surr.getNext();
 	}
 
+	/**
+	 * Sets the opacity of the barriers.
+	 * 
+	 * @param opacity - new opacity.
+	 */
 	public void setOpacity(float opacity) {
 		if (opacity < 0 || opacity > 1) {
 			throw new IllegalArgumentException("Value must be between 0 and 1.");

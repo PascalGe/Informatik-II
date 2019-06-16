@@ -461,6 +461,7 @@ public class SnakeGame implements ActionListener, MouseListener {
 			}
 
 			if (powerupsEnabled) {
+				// TODO move to method
 				// is powerUp here?
 				if (powerUp != null) {
 					if (powerUp.isOccupied(snake.getPos())) {
@@ -526,6 +527,9 @@ public class SnakeGame implements ActionListener, MouseListener {
 		}
 	}
 
+	/**
+	 * Resets the powerUp living counter.
+	 */
 	private void resetPowerUpLivingCounter() {
 		powerUpLivingCounter = random.nextInt(MAXIMUM_POWER_UP_WAITING_TIME - MINIMUM_POWER_UP_WAITING_TIME)
 				+ MINIMUM_POWER_UP_WAITING_TIME;
@@ -673,15 +677,21 @@ public class SnakeGame implements ActionListener, MouseListener {
 		}
 	}
 
+	/**
+	 * Sets the new UHD enabled state.
+	 * 
+	 * @param uhdEnabled - new state.
+	 */
 	public void enableUHD(boolean uhdEnabled) {
 		this.uhdEnabled = uhdEnabled;
 		myPanel.repaint();
 	}
 
-	public boolean isUHDEnabled() {
-		return uhdEnabled;
-	}
-
+	/**
+	 * Sets the new powerUps enabled state.
+	 * 
+	 * @param powerupsEnabled - new state.
+	 */
 	public void enablePowerups(boolean powerupsEnabled) {
 		this.powerupsEnabled = powerupsEnabled;
 		powerUpLivingCounter = random.nextInt(MINIMUM_POWER_UP_WAITING_TIME);
@@ -692,6 +702,11 @@ public class SnakeGame implements ActionListener, MouseListener {
 		myPanel.repaint();
 	}
 
+	/**
+	 * Sets the new infinity tunnel state.
+	 * 
+	 * @param infinityEnabled - new state.
+	 */
 	public void enableInfinityTunnels(boolean infinityEnabled) {
 		this.infinityEnabled = infinityEnabled;
 		barrierArround.setUnused(infinityEnabled);
