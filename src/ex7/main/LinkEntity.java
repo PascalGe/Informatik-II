@@ -88,10 +88,20 @@ public abstract class LinkEntity {
 		return pos;
 	}
 
+	/**
+	 * Setter.
+	 * 
+	 * @param rotation - new rotation.
+	 */
 	public void setRotation(int rotation) {
 		this.rotation = rotation;
 	}
 
+	/**
+	 * Getter.
+	 * 
+	 * @return the current rotation.
+	 */
 	public int getRotation() {
 		return rotation;
 	}
@@ -123,6 +133,13 @@ public abstract class LinkEntity {
 		}
 	}
 
+	/**
+	 * draws the entity by it's UHD image.
+	 * 
+	 * @param g        - the 2D graphics object.
+	 * @param area     - the area to draw in.
+	 * @param tileSize - the tile size.
+	 */
 	private void drawAdvanced(Graphics2D g, Rectangle area, int tileSize) {
 		adjustImage(area, tileSize);
 		g.drawImage(img, at, null);
@@ -131,6 +148,12 @@ public abstract class LinkEntity {
 		}
 	}
 
+	/**
+	 * Adjusts the UHD image
+	 * 
+	 * @param area     - area the image is to place in.
+	 * @param tileSize - the tile size.
+	 */
 	private void adjustImage(Rectangle area, int tileSize) {
 		int theta;
 		switch (rotation) {

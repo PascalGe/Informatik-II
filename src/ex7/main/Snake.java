@@ -177,6 +177,13 @@ public class Snake extends LinkEntity {
 		}
 	}
 
+	/**
+	 * Returns the next position referring to the borders.
+	 * 
+	 * @param rows - number of rows inside the gameArea.
+	 * @param cols - number of columns inside the gameArea.
+	 * @return the next position as Vector.
+	 */
 	private Vector getNextPos(int rows, int cols) {
 		Vector newPos = new Vector(pos.x + dir.x, pos.y + dir.y);
 		if (newPos.x < 0) {
@@ -208,6 +215,11 @@ public class Snake extends LinkEntity {
 		return false;
 	}
 
+	/**
+	 * Sets the snake's ignore collision state.
+	 * 
+	 * @param ignoreCollision - new state.
+	 */
 	public void setIgnoreCollision(boolean ignoreCollision) {
 		this.ignoreCollision = ignoreCollision;
 	}

@@ -9,7 +9,6 @@ import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -44,10 +43,11 @@ public class MainFrame {
 	 */
 	private JMenu optionMenu;
 
-	/**
-	 * The different dialogue options.
-	 */
-	private JMenuItem setFoodItmes, setSize;
+	// TODO Further bonus content
+//	/**
+//	 * The different dialogue options.
+//	 */
+//	private JMenuItem setFoodItmes, setSize;
 
 	/**
 	 * The different toggle options
