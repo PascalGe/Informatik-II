@@ -35,10 +35,10 @@ public class PythagorasTree {
 		g.setColor(new Color(255 - colorA, colorB, colorA));
 
 		// calculate edges
-		Vector lowerLeft = pos.added(up.rotated(135).scaled(a / Math.sqrt(2)));
-		Vector lowerRight = pos.added(up.rotated(-135).scaled(a / Math.sqrt(2)));
-		Vector upperLeft = pos.added(up.rotated(45).scaled(a / Math.sqrt(2)));
-		Vector upperRight = pos.added(up.rotated(-45).scaled(a / Math.sqrt(2)));
+		Vector lowerLeft = pos.added(up.rotated(3 * Math.PI / 4).scaled(a / Math.sqrt(2)));
+		Vector lowerRight = pos.added(up.rotated(-3 * Math.PI / 4).scaled(a / Math.sqrt(2)));
+		Vector upperLeft = pos.added(up.rotated(Math.PI / 4).scaled(a / Math.sqrt(2)));
+		Vector upperRight = pos.added(up.rotated(-Math.PI / 4).scaled(a / Math.sqrt(2)));
 
 		// draw rectangle
 		int[] xPoints = { (int) lowerLeft.x, (int) upperLeft.x, (int) upperRight.x, (int) lowerRight.x };
@@ -65,11 +65,11 @@ public class PythagorasTree {
 		drawRotatedRect(g, pos, up, a, height);
 
 		// Compute shift for the branches
-		Vector shiftLeft = up.scaled(a / 2).rotated(-90).added(up.scaled(a));
-		Vector shiftRight = up.scaled(a / 2).rotated(90).added(up.scaled(a));
+		Vector shiftLeft = up.scaled(a / 2).rotated(Math.PI / 2).added(up.scaled(a));
+		Vector shiftRight = up.scaled(a / 2).rotated(-Math.PI / 2).added(up.scaled(a));
 
-		drawSegment(g, pos.added(shiftLeft), up.rotated(-45), (int) (a / Math.sqrt(2)), height);
-		drawSegment(g, pos.added(shiftRight), up.rotated(45), (int) (a / Math.sqrt(2)), height);
+		drawSegment(g, pos.added(shiftLeft), up.rotated(Math.PI / 4), (int) (a / Math.sqrt(2)), height);
+		drawSegment(g, pos.added(shiftRight), up.rotated(-Math.PI / 4), (int) (a / Math.sqrt(2)), height);
 	}
 
 	// Create the Pythagoras-Tree image and save it as PNG file.
