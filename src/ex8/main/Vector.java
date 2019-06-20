@@ -25,19 +25,14 @@ public class Vector {
 	}
 
 	/**
-	 * Creates a new vector - based on the current vector - that is rotated.
+	 * Creates a new vector - based on the current vector - that is rotated clockwisely.
 	 * 
-	 * @param alpha - angle that the vector will be rotated by.
+	 * @param alpha - angle that the vector will be rotated by clockwisely.
 	 * @return a vector rotated by alpha.
 	 */
 	public Vector rotated(double alpha) {
-		// TODO ROTATE not setToRotation
 		return new Vector(x * Math.cos(Math.toRadians(alpha)) + y * Math.sin(Math.toRadians(alpha)),
 				x * -Math.sin(Math.toRadians(alpha)) + y * Math.cos(Math.toRadians(alpha)));
-	}
-
-	private double abs() {
-		return Math.sqrt(x * x + y * y);
 	}
 
 	/**
