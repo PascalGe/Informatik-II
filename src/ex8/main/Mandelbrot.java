@@ -6,26 +6,45 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Mandelbrot {
 
+	/**
+	 * Checks the complex number c of being an element of the mandelbrot set
+	 * recursively.
+	 * 
+	 * @param c               - complex number to check for being element of the
+	 *                        set.
+	 * @param z               - last element in sequence.
+	 * @param n               - number of element in sequence.
+	 * @param recursion_limit - max recursion depth.
+	 * @return 0 if c is element of the set, otherwise the number of recursions till
+	 *         exit condition.
+	 */
 	public static int mandelbrot(ComplexNumber c, ComplexNumber z, int n, int recursion_limit) {
-		// TODO 8.2.b) check recursively if c is in the Mandelbrot-Set
-		// Return an integer as described in the assignment PDF.
+		// if max recursion reached, it belongs to M
 		if (n > recursion_limit) {
 			return 0;
 		}
 
+		// get next number in sequence
 		ComplexNumber z_n = ComplexNumber.add(ComplexNumber.square(z), c);
 
+		// exit condition, it does not belong to M.
 		if (z_n.abs() > 2) {
 			return 1;
 		}
 
+		// no exit condition
+		// fetch result
 		int result = mandelbrot(c, z_n, ++n, recursion_limit);
-		if (result == 0) {
-			return 0;
-		}
-		return ++result;
+
+		// return 0 if c belongs to M, else increase needed steps.
+		return result == 0 ? 0 : ++result;
 	}
 
 	// Create the Mandelbrot image, fill it and save it as PNG file.
