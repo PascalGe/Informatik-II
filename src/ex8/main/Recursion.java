@@ -2,8 +2,19 @@ package ex8.main;
 
 import java.util.Arrays;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class Recursion {
 
+	/**
+	 * Computes the n-th Fibonacci number recursively.
+	 * 
+	 * @param n - count of Fibonacci number.
+	 * @return - Fibonacci number.
+	 */
 	public static int fibonacci(int n) {
 		// TODO 8.1.a) compute the n-th Fibonacci number (recursively!)
 		if (n == 1 || n == 0) {
@@ -12,10 +23,22 @@ public class Recursion {
 		return fibonacci(n - 1) + fibonacci(n - 2);
 	}
 
+	/**
+	 * Computes the Gregory-Leibniz-Sequence recursively.
+	 * 
+	 * @param n - max. element of the sequence.
+	 * @return approximation to pi.
+	 */
 	public static double gregoryLeibnizRecursive(int n) {
 		return (n > 0 ? gregoryLeibnizRecursive(n - 1) : 0) + 4.0 / (n * 2 + 1) * (1 - 2 * (n % 2));
 	}
 
+	/**
+	 * Computes the Gregory-Leibniz-Sequence iteratively.
+	 * 
+	 * @param n - max. element of the sequence.
+	 * @return approximation to pi.
+	 */
 	public static double gregoryLeibnizIterative(int n) {
 		// TODO 8.1.b) implement an iterative version of the Gregory-Leibniz series
 		double pi = 0.0;
