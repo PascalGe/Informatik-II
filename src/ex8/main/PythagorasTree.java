@@ -8,42 +8,68 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class PythagorasTree {
 
+	/**
+	 * Draws a rotated rectangle.
+	 * 
+	 * @param g      - the Graphics2D object.
+	 * @param pos    - the center of the rectangle.
+	 * @param up     - a vector that points in the "up" direction (with length 1).
+	 * @param a      - the rectangle's width.
+	 * @param height - image's height.
+	 */
 	public static void drawRotatedRect(Graphics2D g, Vector pos, Vector up, int a, int height) {
-		// TODO 8.3.b) Draw a rectangle that is rotated according to the up vector
-		g.setColor(new Color(255 - 1, 0, 1));
+		// set beautiful color
+		int colorA = a;
+		int colorB = 0;
+		if (colorA > 255) {
+			colorB = (colorA - 255) % 256;
+			colorA = 255;
+		}
+		g.setColor(new Color(255 - colorA, colorB, colorA));
 
-		// TODO Eckpunkte berechnen (pos = mitte?)
-		Vector lowerLeft = pos.added(up.rotated(135).scaled(a / 2));
-		Vector lowerRight = pos.added(up.rotated(-135).scaled(a / 2));
-		Vector upperLeft = pos.added(up.rotated(45).scaled(a / 2));
-		Vector upperRight = pos.added(up.rotated(-45).scaled(a / 2));
+		// calculate edges
+		Vector lowerLeft = pos.added(up.rotated(135).scaled(a / Math.sqrt(2)));
+		Vector lowerRight = pos.added(up.rotated(-135).scaled(a / Math.sqrt(2)));
+		Vector upperLeft = pos.added(up.rotated(45).scaled(a / Math.sqrt(2)));
+		Vector upperRight = pos.added(up.rotated(-45).scaled(a / Math.sqrt(2)));
 
+		// draw rectangle
 		int[] xPoints = { (int) lowerLeft.x, (int) upperLeft.x, (int) upperRight.x, (int) lowerRight.x };
 		int[] yPoints = { height - (int) lowerLeft.y, height - (int) upperLeft.y, height - (int) upperRight.y,
 				height - (int) lowerRight.y };
 		g.fillPolygon(xPoints, yPoints, 4);
 	}
 
+	/**
+	 * Draws the rectangle and all it's children.
+	 * 
+	 * @param g      - the Graphics2D object.
+	 * @param pos    - the center of the rectangle.
+	 * @param up     - a vector that points in the "up" direction (with length 1).
+	 * @param a      - the rectangle's start width.
+	 * @param height - image's height.
+	 */
 	public static void drawSegment(Graphics2D g, Vector pos, Vector up, int a, int height) {
-		// TODO 8.3.c) Compute positions and orientations for the branches
-		// continue recursively for every new branch
 		if (a < 2) {
 			return;
 		}
+
+		// draw current
 		drawRotatedRect(g, pos, up, a, height);
 
-		Vector vLeft = up.scaled(a / 2).rotated(90).added(up.scaled(a));
-		Vector vRight = up.scaled(a / 2).rotated(-90).added(up.scaled(a));
+		// Compute shift for the branches
+		Vector shiftLeft = up.scaled(a / 2).rotated(-90).added(up.scaled(a));
+		Vector shiftRight = up.scaled(a / 2).rotated(90).added(up.scaled(a));
 
-//		g.drawRect((int) vLeft.added(pos).x, (int) vLeft.added(pos).y, 10, 10);
-
-		drawRotatedRect(g, pos.added(vLeft), up.rotated(45), a / 2, height);
-		drawRotatedRect(g, pos.added(vRight), up.rotated(-45), a / 2, height);
-
-//		drawSegment(g, vLeft, up.rotated(45), a / 2, height);
-//		drawSegment(g, vRight, up.rotated(-45), a / 2, height);
+		drawSegment(g, pos.added(shiftLeft), up.rotated(-45), (int) (a / Math.sqrt(2)), height);
+		drawSegment(g, pos.added(shiftRight), up.rotated(45), (int) (a / Math.sqrt(2)), height);
 	}
 
 	// Create the Pythagoras-Tree image and save it as PNG file.
