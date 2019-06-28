@@ -1,5 +1,10 @@
 package ex9.main1;
 
+/**
+ * 
+ * @author Informatik II
+ *
+ */
 public class Main {
 	public static void main(String[] args) {
 		IntegerList list = new Pair(0, new Pair(1, new Pair(2, new Pair(3, new Pair(4, new EmptyList())))));

@@ -1,5 +1,10 @@
 package ex9.main1;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class EmptyListInsertException extends Exception {
 
 	private static final long serialVersionUID = 5916811963299292395L;

@@ -1,5 +1,10 @@
 package ex9.main1;
 
+/**
+ * 
+ * @author Informatik II, Pascal Gepperth
+ *
+ */
 public interface IntegerList {
 
 	/**

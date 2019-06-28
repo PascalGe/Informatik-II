@@ -1,5 +1,10 @@
 package ex9.main1;
 
+/**
+ * 
+ * @author Pascal Gepperth (4005085)
+ *
+ */
 public class EmptyList implements IntegerList {
 
 	@Override
