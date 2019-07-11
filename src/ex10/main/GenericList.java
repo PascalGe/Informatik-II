@@ -12,16 +12,19 @@ public class GenericList<E> implements List<E> {
 
 	int firstEmptyIdx;
 	E[] data;
-	
 
-	public GenericList() {	
+	public GenericList() {
 		// TODO constructor initializes data with 4 elements!
-		// Hint: You can create a generic array as Object array, which is casted to type E: 
+		// Hint: You can create a generic array as Object array, which is casted to type
+		// E:
 		// E[] array = (E[]) new Object[sizeOfArray];
+		firstEmptyIdx = 0;
+		data = (E[]) new Object[4];
 	}
-	
-	// Check the documentation of the List interface for descriptions of the following Methods:
-	
+
+	// Check the documentation of the List interface for descriptions of the
+	// following Methods:
+
 	@Override
 	public boolean add(E arg0) {
 		// TODO
@@ -80,13 +83,11 @@ public class GenericList<E> implements List<E> {
 		return false;
 	}
 
-
 	@Override
 	public int lastIndexOf(Object arg0) {
 		// TODO
 		return 0;
 	}
-
 
 	@Override
 	public boolean remove(Object arg0) {
@@ -142,15 +143,15 @@ public class GenericList<E> implements List<E> {
 		// TODO
 		return null;
 	}
-	
+
 	////////////////////// You dont have to touch the following code ///////////////
-	
-	
-	/** The GenericListIterator implements the ListIterator interface, which allows
-	 * us to use Java Iterators, and all their features on the Generic list.
-	 * For example you can use the foreach loop to iterate over all elements in a GenericList:
-	 * for (E elt : list)
-	 * See the printList Method in Generics.java for an example.
+
+	/**
+	 * The GenericListIterator implements the ListIterator interface, which allows
+	 * us to use Java Iterators, and all their features on the Generic list. For
+	 * example you can use the foreach loop to iterate over all elements in a
+	 * GenericList: for (E elt : list) See the printList Method in Generics.java for
+	 * an example.
 	 *
 	 * @param <E> Type of the GnereicList elements.
 	 */
@@ -159,8 +160,9 @@ public class GenericList<E> implements List<E> {
 
 		private GenericList<E> list;
 		private int position;
-		
-		/** Creates a GenericListIterator at position 0 in the list.
+
+		/**
+		 * Creates a GenericListIterator at position 0 in the list.
 		 * 
 		 * @param list The list which is iterated.
 		 */
@@ -168,16 +170,20 @@ public class GenericList<E> implements List<E> {
 			this.list = list;
 			position = 0;
 		}
-		/** Creates a GenericListIterator at the given position in the list.
+
+		/**
+		 * Creates a GenericListIterator at the given position in the list.
 		 * 
-		 * @param list The list which is iterated.
+		 * @param list     The list which is iterated.
 		 * @param position Start position of the iterator.
 		 */
 		GenericListIterator(GenericList<E> list, int position) {
 			this.list = list;
 			this.position = position;
 		}
-		// For descriptions of the overwritten methods see the JavaDocs of the @see(ListIterator) interface.
+
+		// For descriptions of the overwritten methods see the JavaDocs of the
+		// @see(ListIterator) interface.
 		@Override
 		public void add(E arg0) {
 			list.add(arg0);
@@ -210,12 +216,12 @@ public class GenericList<E> implements List<E> {
 
 		@Override
 		public E previous() {
-				if (position <= 0) {
-					throw new NoSuchElementException();
-				}
-				position -= 1;
-				E e = list.get(position);
-				return e;
+			if (position <= 0) {
+				throw new NoSuchElementException();
+			}
+			position -= 1;
+			E e = list.get(position);
+			return e;
 		}
 
 		@Override
@@ -232,11 +238,12 @@ public class GenericList<E> implements List<E> {
 		public void set(E arg0) {
 			list.set(position, arg0);
 		}
-		
+
 	}
-	
+
 	// The Iterator related methods just return a GenericListIterator of this list.
-	// For detailed explanation see the documentation of the List and Iterator interface.
+	// For detailed explanation see the documentation of the List and Iterator
+	// interface.
 	@Override
 	public Iterator<E> iterator() {
 		return listIterator();

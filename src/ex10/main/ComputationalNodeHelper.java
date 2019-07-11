@@ -15,8 +15,8 @@ public class ComputationalNodeHelper {
 			}
 			String[] unknown = array[i].split("="); // seperate left and right part
 			if (unknown.length != 2) {
-				throw new IllegalArgumentException("Could not parse '" + array[i] +
-						"'. Unknowns should be given like this: \"x = 2, y = 4\"");
+				throw new IllegalArgumentException(
+						"Could not parse '" + array[i] + "'. Unknowns should be given like this: \"x = 2, y = 4\"");
 			}
 			String key = unknown[0];
 			Double value = Double.parseDouble(unknown[1]);
@@ -24,5 +24,4 @@ public class ComputationalNodeHelper {
 		}
 		return result;
 	}
-
 }
